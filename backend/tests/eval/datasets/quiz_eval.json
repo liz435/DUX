@@ -1,0 +1,22 @@
+[
+  {
+    "input": {"topic": "Python decorators", "level": "intermediate", "key_concepts": ["decorators", "closures", "functools"]},
+    "criteria": {"min_questions": 3, "must_have_types": ["multiple-choice"]}
+  },
+  {
+    "input": {"topic": "React hooks", "level": "beginner", "key_concepts": ["useState", "useEffect"]},
+    "criteria": {"min_questions": 2, "must_have_types": ["multiple-choice"]}
+  },
+  {
+    "input": {"topic": "Machine Learning", "level": "advanced", "key_concepts": ["gradient descent", "loss function", "regularization"]},
+    "criteria": {"min_questions": 3, "must_have_types": ["multiple-choice"]}
+  },
+  {
+    "input": {"topic": "SQL", "level": "beginner", "key_concepts": ["SELECT", "JOIN", "WHERE"]},
+    "criteria": {"min_questions": 3, "must_have_types": ["multiple-choice"]}
+  },
+  {
+    "input": {"topic": "Rust", "level": "intermediate", "key_concepts": ["ownership", "borrowing"]},
+    "criteria": {"min_questions": 2, "must_have_types": ["multiple-choice"]}
+  }
+]

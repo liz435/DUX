@@ -1,0 +1,22 @@
+[
+  {
+    "input": {"topic": "Python decorators", "level": "intermediate", "title": "Intro to Decorators", "key_topics": ["functions as objects", "closures"]},
+    "criteria": {"min_content_length": 100, "min_interactive": 1}
+  },
+  {
+    "input": {"topic": "React hooks", "level": "beginner", "title": "useState Basics", "key_topics": ["state", "hooks", "re-rendering"]},
+    "criteria": {"min_content_length": 100, "min_interactive": 1}
+  },
+  {
+    "input": {"topic": "Machine Learning", "level": "advanced", "title": "Neural Networks", "key_topics": ["perceptron", "backpropagation", "activation"]},
+    "criteria": {"min_content_length": 100, "min_interactive": 1}
+  },
+  {
+    "input": {"topic": "SQL", "level": "beginner", "title": "SELECT Queries", "key_topics": ["SELECT", "WHERE", "FROM"]},
+    "criteria": {"min_content_length": 100, "min_interactive": 1}
+  },
+  {
+    "input": {"topic": "Rust", "level": "intermediate", "title": "Ownership", "key_topics": ["ownership", "borrowing", "lifetimes"]},
+    "criteria": {"min_content_length": 100, "min_interactive": 1}
+  }
+]

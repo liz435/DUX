@@ -1,0 +1,42 @@
+[
+  {
+    "input": {"topic": "Python decorators", "level": "intermediate", "course_length": "quick", "learning_style": "mixed"},
+    "criteria": {"lesson_count": 3, "must_cover": ["decorators", "functions"], "progressive_difficulty": true}
+  },
+  {
+    "input": {"topic": "React hooks", "level": "beginner", "course_length": "standard", "learning_style": "hands-on"},
+    "criteria": {"lesson_count": 6, "must_cover": ["hooks", "state"], "progressive_difficulty": true}
+  },
+  {
+    "input": {"topic": "Machine Learning", "level": "advanced", "course_length": "deep-dive", "learning_style": "conceptual"},
+    "criteria": {"lesson_count": 10, "must_cover": ["learning", "model"], "progressive_difficulty": true}
+  },
+  {
+    "input": {"topic": "SQL databases", "level": "beginner", "course_length": "quick", "learning_style": "hands-on"},
+    "criteria": {"lesson_count": 3, "must_cover": ["SQL", "database"], "progressive_difficulty": true}
+  },
+  {
+    "input": {"topic": "Rust programming", "level": "intermediate", "course_length": "standard", "learning_style": "mixed"},
+    "criteria": {"lesson_count": 6, "must_cover": ["Rust"], "progressive_difficulty": true}
+  },
+  {
+    "input": {"topic": "CSS Grid", "level": "beginner", "course_length": "quick", "learning_style": "hands-on"},
+    "criteria": {"lesson_count": 3, "must_cover": ["CSS", "grid"], "progressive_difficulty": true}
+  },
+  {
+    "input": {"topic": "Docker containers", "level": "intermediate", "course_length": "standard", "learning_style": "mixed"},
+    "criteria": {"lesson_count": 6, "must_cover": ["Docker", "container"], "progressive_difficulty": true}
+  },
+  {
+    "input": {"topic": "TypeScript generics", "level": "advanced", "course_length": "quick", "learning_style": "conceptual"},
+    "criteria": {"lesson_count": 3, "must_cover": ["TypeScript", "generics"], "progressive_difficulty": true}
+  },
+  {
+    "input": {"topic": "GraphQL APIs", "level": "intermediate", "course_length": "standard", "learning_style": "hands-on"},
+    "criteria": {"lesson_count": 6, "must_cover": ["GraphQL", "API"], "progressive_difficulty": true}
+  },
+  {
+    "input": {"topic": "Kubernetes", "level": "advanced", "course_length": "deep-dive", "learning_style": "mixed"},
+    "criteria": {"lesson_count": 10, "must_cover": ["Kubernetes"], "progressive_difficulty": true}
+  }
+]

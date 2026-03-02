@@ -1,0 +1,22 @@
+[
+  {
+    "input": {"quiz_scores": [0.4, 0.5], "level": "beginner", "completed_lessons": 2, "total_lessons": 6},
+    "criteria": {"expected_action": "supplement"}
+  },
+  {
+    "input": {"quiz_scores": [0.95, 1.0], "level": "advanced", "completed_lessons": 4, "total_lessons": 6},
+    "criteria": {"expected_action": "challenge"}
+  },
+  {
+    "input": {"quiz_scores": [0.75, 0.80], "level": "intermediate", "completed_lessons": 3, "total_lessons": 6},
+    "criteria": {"expected_action": "continue"}
+  },
+  {
+    "input": {"quiz_scores": [0.3], "level": "beginner", "completed_lessons": 1, "total_lessons": 3},
+    "criteria": {"expected_action": "supplement"}
+  },
+  {
+    "input": {"quiz_scores": [0.92, 0.88, 0.95], "level": "intermediate", "completed_lessons": 5, "total_lessons": 6},
+    "criteria": {"expected_action": "challenge"}
+  }
+]

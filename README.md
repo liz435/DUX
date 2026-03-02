@@ -1,324 +1,189 @@
-# AI Dynamic UI
+# DUX - AI-Powered Course Platform
 
-A flexible, type-safe React component library for building dynamic user interfaces that adapt to AI agent needs. Built with Vite, Vercel AI SDK, and shadcn/ui.
+An adaptive learning platform that generates personalized courses using LangGraph agents, LangChain tools, and MCP servers. Pick any topic, choose your level, and get a full course with lessons, quizzes, and interactive elements.
 
-## Features
+## Architecture
 
-- 🎨 **Adaptive UI Components** - Automatically render appropriate UI based on field types
-- 🤖 **AI-Ready** - Designed to work seamlessly with AI agents and the Vercel AI SDK
-- 📝 **Type-Safe** - Fully typed with TypeScript
-- 🎯 **Multiple Input Types** - Text, numbers, sliders, single choice, multiple choice, and boolean
-- 🎨 **Beautiful UI** - Built with shadcn/ui and Tailwind CSS
-- 📦 **Easy to Import** - Use as standalone components in your React projects
-
-## Installation
-
-```bash
-npm install ai-dynamic-ui
+```
+frontend/   React 19 + Vite + TypeScript + Zustand + Tailwind
+backend/    Python 3.11 + FastAPI + LangGraph + LangChain + MCP
 ```
 
-### Peer Dependencies
+The frontend talks to the backend via REST + SSE. Vite proxies `/api` requests to the backend during development.
 
-Make sure you have the following installed:
+## Prerequisites
 
-```bash
-npm install react react-dom
-```
+- **Node.js** >= 22
+- **Python** >= 3.11
+- **An LLM API key** — OpenAI or Anthropic
 
 ## Quick Start
 
-```tsx
-import { DynamicUI } from 'ai-dynamic-ui';
-import type { DynamicFormSchema, FormValues } from 'ai-dynamic-ui';
-
-function App() {
-  const schema: DynamicFormSchema = {
-    title: "User Preferences",
-    description: "Configure your preferences",
-    fields: [
-      {
-        id: "name",
-        type: "text",
-        label: "Name",
-        placeholder: "Enter your name",
-        required: true,
-      },
-      {
-        id: "age",
-        type: "number",
-        label: "Age",
-        min: 18,
-        max: 100,
-      },
-      {
-        id: "theme",
-        type: "single-choice",
-        label: "Theme",
-        options: [
-          { value: "light", label: "Light" },
-          { value: "dark", label: "Dark" },
-        ],
-      },
-    ],
-  };
-
-  const handleSubmit = (values: FormValues) => {
-    console.log("Submitted:", values);
-    // Send to your AI agent or API
-  };
-
-  return <DynamicUI schema={schema} onSubmit={handleSubmit} />;
-}
-```
-
-## Field Types
-
-### Text Field
-
-```typescript
-{
-  id: "username",
-  type: "text",
-  label: "Username",
-  placeholder: "Enter username",
-  description: "Your unique username",
-  required: true,
-  defaultValue: "user123"
-}
-```
-
-### Number Field
-
-```typescript
-{
-  id: "age",
-  type: "number",
-  label: "Age",
-  min: 0,
-  max: 120,
-  step: 1,
-  defaultValue: 25,
-  required: true
-}
-```
-
-### Slider Field
-
-```typescript
-{
-  id: "temperature",
-  type: "slider",
-  label: "Temperature",
-  description: "AI response creativity",
-  min: 0,
-  max: 1,
-  step: 0.1,
-  defaultValue: 0.7
-}
-```
-
-### Single Choice (Radio)
-
-```typescript
-{
-  id: "model",
-  type: "single-choice",
-  label: "AI Model",
-  options: [
-    {
-      value: "gpt-4",
-      label: "GPT-4",
-      description: "Most capable"
-    },
-    {
-      value: "gpt-3.5",
-      label: "GPT-3.5",
-      description: "Fast and efficient"
-    }
-  ],
-  required: true
-}
-```
-
-### Multiple Choice (Checkbox)
-
-```typescript
-{
-  id: "features",
-  type: "multiple-choice",
-  label: "Features",
-  options: [
-    { value: "search", label: "Web Search" },
-    { value: "memory", label: "Memory" },
-    { value: "code", label: "Code Execution" }
-  ],
-  defaultValue: ["memory"]
-}
-```
-
-### Boolean (Switch)
-
-```typescript
-{
-  id: "streaming",
-  type: "boolean",
-  label: "Enable Streaming",
-  description: "Stream responses in real-time",
-  defaultValue: true
-}
-```
-
-## Component API
-
-### DynamicUI Props
-
-```typescript
-interface DynamicUIProps {
-  schema: DynamicFormSchema;           // Form configuration
-  onSubmit: (values: FormValues) => void | Promise<void>;  // Submit handler
-  submitLabel?: string;                // Custom submit button text
-  className?: string;                  // Additional CSS classes
-  initialValues?: FormValues;          // Pre-populate form values
-}
-```
-
-### DynamicFormSchema
-
-```typescript
-interface DynamicFormSchema {
-  title?: string;         // Form title
-  description?: string;   // Form description
-  fields: Field[];        // Array of field configurations
-}
-```
-
-## Importing Individual Components
-
-You can also import and use individual field components:
-
-```tsx
-import {
-  TextFieldComponent,
-  NumberFieldComponent,
-  SliderFieldComponent,
-  SingleChoiceFieldComponent,
-  MultipleChoiceFieldComponent,
-  BooleanFieldComponent
-} from 'ai-dynamic-ui';
-```
-
-## Styling
-
-This library uses Tailwind CSS and shadcn/ui. Make sure your project has Tailwind CSS configured. Import the styles:
-
-```tsx
-import 'ai-dynamic-ui/styles.css';
-```
-
-## Integration with Vercel AI SDK
-
-The DynamicUI component works seamlessly with AI agents:
-
-```tsx
-import { useChat } from 'ai/react';
-import { DynamicUI } from 'ai-dynamic-ui';
-
-function AIChat() {
-  const { messages, append } = useChat();
-
-  const handleSubmit = async (values: FormValues) => {
-    await append({
-      role: 'user',
-      content: JSON.stringify(values)
-    });
-  };
-
-  return (
-    <DynamicUI
-      schema={aiGeneratedSchema}
-      onSubmit={handleSubmit}
-    />
-  );
-}
-```
-
-## Example: AI Configuration Form
-
-```tsx
-const aiConfigSchema: DynamicFormSchema = {
-  title: "AI Agent Configuration",
-  description: "Customize your AI agent's behavior",
-  fields: [
-    {
-      id: "model",
-      type: "single-choice",
-      label: "Model",
-      options: [
-        { value: "gpt-4", label: "GPT-4" },
-        { value: "claude-3", label: "Claude 3" }
-      ],
-      required: true
-    },
-    {
-      id: "temperature",
-      type: "slider",
-      label: "Creativity",
-      min: 0,
-      max: 1,
-      step: 0.1,
-      defaultValue: 0.7
-    },
-    {
-      id: "features",
-      type: "multiple-choice",
-      label: "Capabilities",
-      options: [
-        { value: "search", label: "Web Search" },
-        { value: "code", label: "Code Execution" },
-        { value: "memory", label: "Long-term Memory" }
-      ]
-    },
-    {
-      id: "streaming",
-      type: "boolean",
-      label: "Enable Streaming",
-      defaultValue: true
-    }
-  ]
-};
-```
-
-## Development
+### 1. Clone and install
 
 ```bash
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build library
-npm run build
-
-# Run linter
-npm run lint
+# Install both frontend and backend dependencies
+make install
 ```
 
-## Tech Stack
+Or manually:
 
-- ⚡ **Vite** - Fast build tool
-- ⚛️ **React 19** - UI library
-- 📘 **TypeScript** - Type safety
-- 🎨 **Tailwind CSS** - Styling
-- 🎭 **shadcn/ui** - UI components
-- 🤖 **Vercel AI SDK** - AI integration
-- 🔍 **Zod** - Schema validation
+```bash
+cd frontend && npm install
+cd ../backend && pip install -e ".[dev]"
+```
 
-## License
+### 2. Configure the backend
 
-MIT
+```bash
+cp backend/.env.example backend/.env
+```
 
-## Contributing
+Edit `backend/.env` and set your API key:
 
-Contributions are welcome! Please feel free to submit a Pull Request.
-# DUX
+```env
+# Pick your provider
+LLM_PROVIDER=openai          # or "anthropic"
+
+# Set the matching key
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+
+# Models (defaults work well)
+LLM_MODEL_CAPABLE=gpt-4o
+LLM_MODEL_FAST=gpt-4o-mini
+```
+
+### 3. Run the dev servers
+
+Open **two terminals**:
+
+```bash
+# Terminal 1 — backend (port 8000)
+make dev-backend
+
+# Terminal 2 — frontend (port 5173)
+make dev-frontend
+```
+
+Then open **http://localhost:5173** in your browser.
+
+### Or use Docker Compose
+
+```bash
+# Make sure backend/.env exists first
+docker compose up --build
+```
+
+This starts both services. Frontend at `http://localhost:5173`, backend at `http://localhost:8000`.
+
+## Running Tests
+
+```bash
+# All backend tests (125 tests)
+make test
+
+# Or from the backend directory with more options:
+cd backend
+make test              # all tests with coverage
+make test-unit         # unit tests only
+make test-integration  # integration tests only
+```
+
+Tests run without an API key — all LangGraph agents have deterministic fallback paths.
+
+## Running Evals
+
+Evals assess the quality of agent outputs (outline structure, lesson content, quiz validity, tutor adaptation).
+
+```bash
+cd backend
+
+# Structural evals (no LLM required, fast)
+make eval-quick
+
+# Full eval suite (requires LLM API key)
+make eval
+```
+
+## Linting & Formatting
+
+```bash
+# Lint everything
+make lint
+
+# Backend only
+cd backend
+make lint       # ruff + mypy
+make format     # auto-fix
+```
+
+## Project Structure
+
+```
+backend/
+  app/
+    agents/
+      graphs/          LangGraph StateGraph agents
+        course_planner.py   Plans course outline
+        lesson_writer.py    Writes lesson content
+        quiz_generator.py   Generates quizzes
+        tutor.py            Adaptive tutoring feedback
+        orchestrator.py     Composes sub-graphs
+      prompts/         System prompts + output schemas
+      tools/           LangChain tools (curriculum, content, assessment)
+      llm.py           LLM provider factory
+    mcp/
+      servers/         MCP servers (curriculum, research)
+      client.py        MCP-to-LangChain bridge
+    models/            Pydantic models (course, agent state, API schemas)
+    api/routes/        FastAPI route handlers
+    services/          Business logic + graph invocation
+    eval/              Eval metrics + runner
+    config.py          Settings from .env
+    main.py            FastAPI app entrypoint
+  tests/
+    unit/              Model, tool, prompt tests
+    integration/       Graph, API, MCP tests
+    eval/              Eval suite + datasets
+
+frontend/
+  src/
+    api/client.ts      API client + SSE streaming
+    store/             Zustand state management
+    components/
+      layout/          AppShell, Sidebar, TopBar
+      course/          CourseGeneratingView, QuizResults
+      DynamicUI.tsx    Schema-driven form component
+    pages/             HomePage, LessonPage, QuizPage, ProgressPage
+    types/             TypeScript type definitions
+```
+
+## API Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| `POST` | `/api/courses` | Create a course (starts generation) |
+| `GET` | `/api/courses/{id}/stream` | SSE stream of generation progress |
+| `GET` | `/api/courses/{id}` | Get full course data |
+| `POST` | `/api/courses/{id}/lessons/{idx}/generate` | Generate a single lesson |
+| `POST` | `/api/courses/{id}/quizzes/{idx}/generate` | Generate a quiz |
+| `POST` | `/api/courses/{id}/quizzes/{idx}/grade` | Grade quiz answers |
+| `POST` | `/api/courses/{id}/feedback` | Submit tutor feedback |
+| `GET` | `/api/health` | Health check |
+
+## Environment Variables
+
+| Variable | Default | Description |
+|----------|---------|-------------|
+| `LLM_PROVIDER` | `openai` | `openai` or `anthropic` |
+| `OPENAI_API_KEY` | — | OpenAI API key |
+| `ANTHROPIC_API_KEY` | — | Anthropic API key |
+| `LLM_MODEL_CAPABLE` | `gpt-4o` | Model for complex tasks (planning, writing) |
+| `LLM_MODEL_FAST` | `gpt-4o-mini` | Model for simpler tasks (validation, tools) |
+| `LLM_TEMPERATURE` | `0.7` | Generation temperature |
+| `LANGSMITH_API_KEY` | — | Optional LangSmith tracing key |
+| `LANGSMITH_PROJECT` | `dux-course-platform` | LangSmith project name |
+| `HOST` | `0.0.0.0` | Backend host |
+| `PORT` | `8000` | Backend port |
+| `CORS_ORIGINS` | `["http://localhost:5173"]` | Allowed CORS origins |

@@ -8,6 +8,34 @@ import { SingleChoiceFieldComponent } from "./fields/SingleChoiceFieldComponent"
 import { MultipleChoiceFieldComponent } from "./fields/MultipleChoiceFieldComponent";
 import { BooleanFieldComponent } from "./fields/BooleanFieldComponent";
 
+const TYPE_MAP: Record<string, Field["type"]> = {
+  "short-answer": "text",
+  "short_answer": "text",
+  "free-text": "text",
+  "free_text": "text",
+  "textarea": "text",
+  "string": "text",
+  "input": "text",
+  "radio": "single-choice",
+  "select": "single-choice",
+  "single_choice": "single-choice",
+  "dropdown": "single-choice",
+  "checkbox": "multiple-choice",
+  "multiple_choice": "multiple-choice",
+  "toggle": "boolean",
+  "true-false": "boolean",
+  "true_false": "boolean",
+  "range": "slider",
+  "integer": "number",
+  "float": "number",
+};
+
+function normalizeField(raw: any): Field {
+  const type = TYPE_MAP[raw.type] ?? raw.type ?? "text";
+  const label = raw.label || raw.question || raw.text || raw.title || "";
+  return { ...raw, type, label };
+}
+
 interface DynamicUIProps {
   schema: DynamicFormSchema;
   onSubmit: (values: FormValues) => void | Promise<void>;
@@ -25,9 +53,11 @@ export const DynamicUI: React.FC<DynamicUIProps> = ({
   initialValues = {},
   disabled = false,
 }) => {
+  const fields = schema.fields.map(normalizeField);
+
   const getDefaultValues = () => {
     const defaultValues: FormValues = {};
-    schema.fields.forEach((field) => {
+    fields.forEach((field) => {
       if (initialValues[field.id] !== undefined) {
         defaultValues[field.id] = initialValues[field.id];
       } else if ("defaultValue" in field && field.defaultValue !== undefined) {
@@ -48,7 +78,7 @@ export const DynamicUI: React.FC<DynamicUIProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const missing = schema.fields
+    const missing = fields
       .filter((field) => field.required && !values[field.id])
       .map((field) => field.label);
     if (missing.length > 0) {
@@ -79,8 +109,10 @@ export const DynamicUI: React.FC<DynamicUIProps> = ({
         return <MultipleChoiceFieldComponent key={field.id} field={field} value={value || []} onChange={onChange} />;
       case "boolean":
         return <BooleanFieldComponent key={field.id} field={field} value={value} onChange={onChange} />;
-      default:
-        return null;
+      default: {
+        const fallback = field as unknown as Field;
+        return <TextFieldComponent key={fallback.id} field={{ ...fallback, type: "text" } as any} value={value} onChange={onChange} />;
+      }
     }
   };
 
@@ -98,7 +130,7 @@ export const DynamicUI: React.FC<DynamicUIProps> = ({
       )}
       <div className="p-6">
         <form onSubmit={handleSubmit} className="space-y-5">
-          {schema.fields.map((field) => (
+          {fields.map((field) => (
             <div key={field.id}>{renderField(field)}</div>
           ))}
           {errors.length > 0 && (

@@ -248,19 +248,30 @@ def build_lesson_writer_graph() -> StateGraph:
 
 def _fallback_lesson_content(outline, prefs) -> str:
     """Deterministic fallback content when LLM is unavailable."""
-    topics_md = "\n".join(f"- {t}" for t in outline.key_topics)
+    # Build numbered subsections from key topics
+    topic_sections = []
+    for i, t in enumerate(outline.key_topics, 1):
+        topic_sections.append(
+            f"### 2.{i} {t}\n\n"
+            f"{t} is an important concept in {prefs.topic}. "
+            f"Understanding this topic will help you build a solid foundation.\n"
+        )
+    topics_md = "\n\n".join(topic_sections) if topic_sections else ""
+
     return (
-        f"## {outline.title}\n\n"
+        f"**What you'll learn:**\n\n"
+        + "\n".join(f"- {t}" for t in outline.key_topics)
+        + f"\n\n"
+        f"## 1. Introduction\n\n"
+        f"### 1.1 Overview\n\n"
         f"{outline.summary}\n\n"
-        f"### Key Topics\n\n{topics_md}\n\n"
-        f"### Introduction\n\n"
+        f"### 1.2 Why This Matters\n\n"
         f"In this lesson we explore {outline.title.lower()} as part of our "
         f"{prefs.level} course on {prefs.topic}. "
         f"We will cover the fundamentals and work through practical examples.\n\n"
-        f"### Core Concepts\n\n"
-        f"Each of the key topics above builds on the previous one, "
-        f"giving you a solid foundation in {prefs.topic}.\n\n"
-        f"### Summary\n\n"
+        f"## 2. Core Concepts\n\n"
+        f"{topics_md}\n\n"
+        f"## 3. Key Takeaways\n\n"
         f"You have completed {outline.title}. "
-        f"Review the key topics above before moving to the next lesson.\n"
+        f"Review the key concepts above before moving to the next lesson.\n"
     )

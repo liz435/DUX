@@ -1,0 +1,510 @@
+{
+  "id": "ea41b964-a262-4447-99ac-62c86408c91a",
+  "title": "Course: agentic engineering",
+  "description": "A quick beginner course on agentic engineering.",
+  "topic": "agentic engineering",
+  "level": "beginner",
+  "lessons": [
+    {
+      "index": 0,
+      "title": "Introduction to Agentic Engineering",
+      "summary": "In this lesson, students will be introduced to the basic concepts of agentic engineering, exploring its relevance and impact on technology. Key principles and components will be discussed to set the foundation for more advanced topics.",
+      "key_topics": [
+        "Definition of agentic engineering",
+        "Importance in modern technology",
+        "Core principles of agentic engineering",
+        "Components of agentic systems",
+        "Influence on system design"
+      ],
+      "has_quiz": true,
+      "estimated_minutes": 60,
+      "module": "",
+      "prerequisites": [],
+      "learning_objectives": [],
+      "key_terms": [],
+      "difficulty": 0.5,
+      "content": "## Introduction to Agentic Engineering\n\nWelcome to the first lesson in our module on agentic engineering. This lesson will provide you with a foundational understanding of agentic engineering, its importance in modern technology, and how it influences system design. By the end of this lesson, you should be able to:\n\n- Define agentic engineering and understand its importance in today's technological landscape.\n- Identify the core principles and components of agentic engineering.\n- Describe how agentic engineering can influence system design.\n\nLet's dive in!\n\n## What is Agentic Engineering?\n\nAgentic engineering is a field of study and practice that involves the creation and management of **agents** — autonomous entities that perceive their environment and take actions to achieve specific goals. These agents can be software programs, robots, or any system capable of making decisions based on input data.\n\n### Why It Matters\n\nAgentic engineering is crucial in modern technology because it allows for the automation and optimization of complex systems. By leveraging autonomous agents, we can build systems that are more efficient, adaptable, and capable of operating in dynamic environments without constant human intervention. This is particularly important in areas like artificial intelligence, robotics, and the Internet of Things (IoT).\n\n### How It Works\n\nAt its core, agentic engineering involves designing agents with the ability to sense their environment, process information, and act upon it. These agents often use algorithms and models to make decisions, learning from feedback to improve over time. \n\n### When to Use It\n\nAgentic engineering is ideal when you need systems that can operate independently and adapt to changing conditions. It is commonly used in scenarios where human intervention is impractical or impossible, such as in autonomous vehicles or remote sensing.\n\n### Example\n\nConsider an autonomous delivery robot. This robot can navigate through a city, avoiding obstacles and selecting optimal routes to deliver packages. It perceives its environment using sensors, makes decisions using algorithms, and acts by moving and adjusting its path as necessary.\n\n## Importance in Modern Technology\n\nAgentic engineering plays a pivotal role in various modern technological advancements. It enables the development of systems that can operate autonomously, making it a cornerstone of AI and machine learning applications.\n\n### Real-World Relevance\n\nIn real-world applications, agentic engineering is used in:\n\n- **Autonomous Vehicles:** Cars that drive themselves by perceiving their surroundings and making real-time decisions.\n- **Smart Homes:** Systems that automate tasks like lighting and temperature control based on user preferences and environmental conditions.\n- **Healthcare:** Robots and software that assist in diagnosis and treatment by analyzing data and suggesting actions.\n\n### Mechanism and Implementation\n\nImplementing agentic systems requires a combination of sensors for data input, processors for decision-making, and actuators for executing actions. These components work together to ensure the agent can perceive, decide, and act.\n\n[Interactive Check 1]\n\n## Core Principles of Agentic Engineering\n\nThe core principles of agentic engineering revolve around autonomy, perception, decision-making, and action.\n\n### Principle 1: Autonomy\n\n**Autonomy** is the degree to which an agent can operate independently without human intervention. This principle ensures that agents can make decisions and act on them without needing constant guidance.\n\n### Principle 2: Perception\n\n**Perception** involves the agent's ability to gather information from its environment. This is typically achieved through sensors or data inputs that provide the necessary context for decision-making.\n\n### Principle 3: Decision-Making\n\n**Decision-Making** is the process by which agents analyze their perceptions and determine the best course of action. This often involves algorithms, artificial intelligence, or machine learning techniques.\n\n### Principle 4: Action\n\n**Action** refers to the ability of agents to affect their environment based on decisions made. This could involve physical movement, data manipulation, or any change enacted by the agent.\n\n### Example\n\nLet's consider a simple software agent that manages home energy consumption. It gathers data from sensors (perception), decides when to adjust heating or cooling based on the data (decision-making), and sends commands to the HVAC system (action).\n\n## Components of Agentic Systems\n\nAgentic systems are composed of several key components:\n\n### Sensors\n\n**Sensors** are devices that collect data from the environment. For instance, temperature sensors in a smart thermostat gather data to inform heating decisions.\n\n### Processors\n\n**Processors** are the computational units that analyze sensor data and make decisions. They run algorithms that dictate how the agent should respond to given inputs.\n\n### Actuators\n\n**Actuators** are mechanisms that carry out actions based on decisions. In robotics, actuators move parts of the machine, like wheels or arms, to perform tasks.\n\n### Communication Systems\n\n**Communication Systems** allow agents to interact with other agents or systems, facilitating coordination and data exchange.\n\n### Scenario\n\nImagine a fleet of drones used for agricultural monitoring. Each drone uses cameras (sensors) to collect images, on-board computers (processors) to analyze crop health, and flight controls (actuators) to adjust their path. They communicate with a central system to report findings and receive new instructions.\n\n[Interactive Check 2]\n\n## Influence on System Design\n\nAgentic engineering significantly influences how systems are designed, emphasizing flexibility, scalability, and adaptability.\n\n### Flexibility\n\nAgentic systems are designed to be flexible, able to adjust their behavior based on environmental changes or new objectives. This is crucial for systems operating in unpredictable conditions.\n\n### Scalability\n\nThese systems can be scaled by adding more agents, each capable of operating independently or in coordination with others, accommodating larger tasks or areas.\n\n### Adaptability\n\nAgentic systems can learn and evolve over time, improving their performance and adapting to new challenges or tasks.\n\n### Decision Framework\n\nWhen designing systems, consider agentic engineering if you need automation, autonomous operation, or the ability to adapt to changing environments. Traditional systems may be preferable when tasks are simple, static, or require precise human control.\n\n### Example\n\nA smart city traffic management system uses agentic principles to optimize traffic flow. Sensors detect vehicle density, processors analyze patterns, and actuators control traffic signals. The system adapts to real-time conditions, reducing congestion and improving travel times.\n\n## Key Takeaways\n\n- Agentic engineering involves creating autonomous agents that perceive, decide, and act.\n- It is vital for developing systems that operate independently and adapt to dynamic environments.\n- Core principles include autonomy, perception, decision-making, and action.\n- Components of agentic systems include sensors, processors, actuators, and communication systems.\n- Agentic engineering influences system design by promoting flexibility, scalability, and adaptability.\n\n## What's Next\n\nIn the next lesson, we will delve deeper into the specific algorithms and methodologies used in agentic engineering, exploring how these systems learn and improve over time. Stay tuned to further expand your understanding of this exciting field!",
+      "interactive_elements": [
+        {
+          "title": "Quick Check",
+          "description": "Test your understanding of the concept above.",
+          "fields": [
+            {
+              "id": "check_q1",
+              "type": "single-choice",
+              "label": "Which statement best describes this concept?",
+              "required": true,
+              "options": [
+                {
+                  "value": "a",
+                  "label": "Option A — correct understanding"
+                },
+                {
+                  "value": "b",
+                  "label": "Option B — common misconception"
+                },
+                {
+                  "value": "c",
+                  "label": "Option C — unrelated concept"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Reflect",
+          "description": "Take a moment to think about what you've learned.",
+          "fields": [
+            {
+              "id": "reflection_q1",
+              "type": "text",
+              "label": "In your own words, explain this concept:",
+              "placeholder": "Type your explanation here..."
+            }
+          ]
+        }
+      ],
+      "is_completed": false,
+      "is_unlocked": true
+    },
+    {
+      "index": 1,
+      "title": "Core Concepts of Agentic Engineering",
+      "summary": "This lesson delves into the core concepts of agentic engineering, focusing on autonomy and adaptability. Students will explore how these concepts are applied to create self-regulating systems.",
+      "key_topics": [
+        "Autonomy in agentic systems",
+        "Adaptability of agents",
+        "Self-regulation in engineering systems",
+        "Application of agentic principles",
+        "Simple system examples"
+      ],
+      "has_quiz": true,
+      "estimated_minutes": 60,
+      "module": "",
+      "prerequisites": [],
+      "learning_objectives": [],
+      "key_terms": [],
+      "difficulty": 0.5,
+      "content": "## Core Concepts of Agentic Engineering\n\n### What You'll Learn\n- Explain the key concepts of **autonomy** and **adaptability** in agentic engineering.\n- Illustrate the role of agentic engineering in creating **self-regulating systems**.\n- Demonstrate the application of agentic principles in simple systems.\n\n---\n\n## Autonomy in Agentic Systems\n\n### What is Autonomy?\n\n**Autonomy** in the context of agentic engineering refers to the ability of an agent (a system or component designed to perform specific tasks) to operate independently without external control. Autonomous systems can make decisions and act upon them based on internal mechanisms and the data they receive from their environment.\n\n### Why Does Autonomy Matter?\n\nAutonomy is crucial in scenarios where human intervention is impractical or impossible. For example, autonomous vehicles must navigate and make real-time decisions on their own. In industrial applications, autonomous robots increase efficiency by performing repetitive tasks without continuous oversight.\n\n### How Does Autonomy Work?\n\nAutonomy is achieved through a combination of sensors, data processing, and decision-making algorithms. Sensors gather data from the environment, which is then processed to understand the situation. Decision-making algorithms, often driven by artificial intelligence, determine the best course of action based on predefined goals.\n\n### When to Use Autonomy\n\nUse autonomous systems when you need to reduce human intervention, increase efficiency, or operate in environments that are hazardous or inaccessible to humans. Alternatives include remote-controlled systems or manual operations, which are more suitable when human judgment is crucial or in highly variable environments.\n\n### Example: Autonomous Drone Navigation\n\nConsider a drone designed to autonomously survey a field. It uses GPS for location tracking and onboard cameras to avoid obstacles. The drone's software processes this data to navigate the field without human input, demonstrating autonomy in action.\n\n```python\nclass AutonomousDrone:\n    def __init__(self, gps, camera):\n        self.gps = gps\n        self.camera = camera\n\n    def navigate(self):\n        position = self.gps.get_current_position()\n        if self.camera.detect_obstacle():\n            self.avoid_obstacle()\n        else:\n            self.move_to_next_waypoint()\n```\n\n[Interactive Check 1]\n\n---\n\n## Adaptability of Agents\n\n### What is Adaptability?\n\n**Adaptability** in agentic systems is the ability to change behavior in response to environmental changes. This means an agent can adjust its actions to maintain effectiveness despite varying conditions.\n\n### Why Does Adaptability Matter?\n\nAdaptability is important in dynamic environments where conditions can change rapidly. For instance, in financial markets, adaptable trading algorithms can adjust strategies based on market fluctuations, potentially increasing profitability.\n\n### How Does Adaptability Work?\n\nAdaptability is typically implemented using feedback loops and learning algorithms. Feedback loops allow the system to assess the results of its actions and adjust future behavior accordingly. Learning algorithms, such as machine learning models, can improve an agent's decision-making over time by analyzing past performance.\n\n### When to Use Adaptability\n\nImplement adaptability in systems that operate in unpredictable or rapidly changing environments, such as weather prediction systems or adaptive traffic control systems. Non-adaptive systems are more efficient for stable, predictable tasks.\n\n### Example: Adaptive Temperature Control\n\nAn adaptive thermostat adjusts heating and cooling based on occupancy and external temperature changes, learning from past patterns to optimize energy use.\n\n```python\nclass AdaptiveThermostat:\n    def __init__(self):\n        self.temperature_history = []\n\n    def adjust_temperature(self, current_temp, desired_temp):\n        error = desired_temp - current_temp\n        adjustment = self.calculate_adjustment(error)\n        self.apply_adjustment(adjustment)\n\n    def calculate_adjustment(self, error):\n        # Simple proportional control example\n        return error * 0.1\n```\n\n---\n\n## Self-Regulation in Engineering Systems\n\n### What are Self-Regulating Systems?\n\n**Self-regulating systems** are systems that automatically maintain desired states or conditions without external intervention. They use feedback to monitor their output and adjust their operations to achieve stability.\n\n### Why Does Self-Regulation Matter?\n\nSelf-regulation enhances system reliability and efficiency by minimizing the need for manual control. In power grids, self-regulating mechanisms ensure consistent power supply despite demand fluctuations.\n\n### How Do Self-Regulating Systems Work?\n\nThese systems use feedback loops to compare actual performance with desired performance. Discrepancies lead to corrective actions. Common mechanisms include PID (Proportional-Integral-Derivative) controllers that adjust outputs to minimize error.\n\n### When to Use Self-Regulation\n\nDeploy self-regulating systems in environments where stability is critical, such as in automated manufacturing or climate control systems. Manual control is a better choice for systems requiring human judgment or creativity.\n\n### Example: Self-Regulating Water Level Control\n\nConsider a water tank that uses a float mechanism to regulate water level. The float adjusts the water inlet valve to keep the level constant.\n\n```python\nclass WaterTank:\n    def __init__(self, max_level):\n        self.current_level = 0\n        self.max_level = max_level\n\n    def fill(self, amount):\n        if self.current_level + amount > self.max_level:\n            self.current_level = self.max_level\n        else:\n            self.current_level += amount\n\n    def regulate_level(self):\n        if self.current_level < self.max_level:\n            self.fill(self.max_level - self.current_level)\n```\n\n[Interactive Check 2]\n\n---\n\n## Application of Agentic Principles\n\nTo apply agentic principles, start by identifying tasks where autonomy, adaptability, or self-regulation can improve efficiency or effectiveness. Consider the environment and requirements to determine the necessary level of complexity for your agentic system.\n\n### Simple System Example: Smart Lighting\n\nA smart lighting system that turns lights on or off based on room occupancy and ambient light levels demonstrates basic agentic principles. The system autonomously decides when to activate lights, adapts to changes in lighting conditions, and maintains desired brightness levels.\n\n```python\nclass SmartLight:\n    def __init__(self, ambient_light_sensor, motion_sensor):\n        self.ambient_light_sensor = ambient_light_sensor\n        self.motion_sensor = motion_sensor\n        self.is_on = False\n\n    def update(self):\n        ambient_light = self.ambient_light_sensor.read()\n        if self.motion_sensor.detect_motion() and ambient_light < threshold:\n            self.turn_on()\n        else:\n            self.turn_off()\n    \n    def turn_on(self):\n        self.is_on = True\n        print(\"Light is ON\")\n\n    def turn_off(self):\n        self.is_on = False\n        print(\"Light is OFF\")\n```\n\n---\n\n## Key Takeaways\n- **Autonomy** allows systems to operate independently, reducing the need for human intervention.\n- **Adaptability** enables systems to adjust to changing conditions, enhancing performance in dynamic environments.\n- **Self-regulation** maintains stability and efficiency by automatically correcting deviations from desired states.\n- Agentic principles can be applied to create systems that are more efficient, reliable, and capable of operating in challenging environments.\n- Simple systems like smart lighting illustrate the foundational aspects of agentic engineering.\n\n## What's Next\n\nIn the next lesson, we will delve into the design and architecture of complex agentic systems, exploring how to structure and integrate multiple agents to work cohesively towards a common goal.",
+      "interactive_elements": [
+        {
+          "title": "Quick Check",
+          "description": "Test your understanding of the concept above.",
+          "fields": [
+            {
+              "id": "check_q1",
+              "type": "single-choice",
+              "label": "Which statement best describes this concept?",
+              "required": true,
+              "options": [
+                {
+                  "value": "a",
+                  "label": "Option A — correct understanding"
+                },
+                {
+                  "value": "b",
+                  "label": "Option B — common misconception"
+                },
+                {
+                  "value": "c",
+                  "label": "Option C — unrelated concept"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Reflect",
+          "description": "Take a moment to think about what you've learned.",
+          "fields": [
+            {
+              "id": "reflection_q1",
+              "type": "text",
+              "label": "In your own words, explain this concept:",
+              "placeholder": "Type your explanation here..."
+            }
+          ]
+        }
+      ],
+      "is_completed": false,
+      "is_unlocked": false
+    },
+    {
+      "index": 2,
+      "title": "Practical Applications of Agentic Engineering",
+      "summary": "In the final lesson, students will apply their knowledge of agentic engineering to practical examples and case studies. The lesson will involve analyzing real-world applications and evaluating the effectiveness of agentic systems.",
+      "key_topics": [
+        "Practical problem-solving with agentic engineering",
+        "Case studies of agentic applications",
+        "Effectiveness evaluation of agentic systems",
+        "Scenario analysis",
+        "Real-world applications"
+      ],
+      "has_quiz": true,
+      "estimated_minutes": 60,
+      "module": "",
+      "prerequisites": [],
+      "learning_objectives": [],
+      "key_terms": [],
+      "difficulty": 0.5,
+      "content": "## Practical Applications of Agentic Engineering\n\n### What You'll Learn\n\n- How to apply agentic engineering concepts to solve practical problems.\n- Analyze case studies of agentic engineering in real-world applications.\n- Evaluate the effectiveness of agentic systems in various scenarios.\n\nBuilding on the foundational understanding from previous lessons, this session will dive into the practical applications of agentic engineering. By the end of this lesson, you will have a clearer picture of how agentic engineering can be used effectively in real-world scenarios and how to evaluate its success.\n\n## Practical Problem-Solving with Agentic Engineering\n\n### What is Practical Problem-Solving?\n\n**Practical problem-solving** in the context of agentic engineering involves using agentic systems to address real-world challenges. This means designing and deploying systems that can operate autonomously, adapt to changing environments, and make decisions to achieve specific goals.\n\n### Why It Matters\n\nAgentic engineering offers a powerful approach to automation and decision-making. It can be applied in areas such as robotics, autonomous vehicles, and smart systems, where traditional control systems might struggle with complexity and uncertainty.\n\n### How It Works\n\nAgentic systems are designed to perceive their environment, reason about the situation, and take appropriate actions. These systems are often built using a combination of sensors, decision-making algorithms, and actuators.\n\nFor example, consider a robotic vacuum cleaner that needs to navigate a room while avoiding obstacles. It uses sensors to detect objects, algorithms to plan a path, and motors to move.\n\n### When to Use It vs. Alternatives\n\nAgentic engineering is particularly useful when:\n\n- The environment is dynamic and unpredictable.\n- The system needs to operate autonomously without constant human intervention.\n- There is a need for complex decision-making.\n\nIn contrast, for static environments with predictable outcomes, simpler automated systems might suffice.\n\n### Concrete Example\n\nLet's look at a simple Python example that simulates an agentic system. This system decides whether to move forward, turn left, or turn right based on sensor inputs.\n\n```python\n# A simple agentic system simulation for a robotic agent\nclass RoboticAgent:\n    def __init__(self):\n        self.position = (0, 0)\n        self.direction = 'N'  # N, E, S, W\n\n    def perceive_environment(self, sensors):\n        # Simulate sensor input (e.g., obstacles)\n        return sensors\n\n    def decide_action(self, perceived_data):\n        # Simple decision-making based on perceived data\n        if perceived_data == 'obstacle ahead':\n            return 'turn right'\n        else:\n            return 'move forward'\n\n    def act(self, action):\n        if action == 'move forward':\n            if self.direction == 'N':\n                self.position = (self.position[0], self.position[1] + 1)\n            elif self.direction == 'E':\n                self.position = (self.position[0] + 1, self.position[1])\n        elif action == 'turn right':\n            # Update direction clockwise\n            directions = ['N', 'E', 'S', 'W']\n            new_index = (directions.index(self.direction) + 1) % 4\n            self.direction = directions[new_index]\n\n    def simulate(self, sensors):\n        perceived_data = self.perceive_environment(sensors)\n        action = self.decide_action(perceived_data)\n        self.act(action)\n        print(f\"Position: {self.position}, Direction: {self.direction}\")\n\n# Example usage\nagent = RoboticAgent()\nagent.simulate('obstacle ahead')\n```\n\nThis simple example illustrates the basic steps an agent might take in decision-making and action.\n\n## Case Studies of Agentic Applications\n\n### What is a Case Study?\n\nA **case study** is a detailed examination of a specific instance or example, particularly to illustrate broader principles or practices.\n\n### Why It Matters\n\nCase studies provide real-world context to theoretical concepts. By examining successful implementations of agentic systems, we can learn best practices and common pitfalls.\n\n### Real-World Applications\n\n1. **Autonomous Vehicles**: Companies like Tesla and Waymo use agentic systems to enable vehicles to navigate roads, avoid obstacles, and make decisions in real-time.\n   \n2. **Smart Homes**: Systems like Amazon Alexa use agentic engineering to understand natural language commands, control devices, and learn user preferences.\n\n3. **Industrial Automation**: Factories use agentic systems for monitoring and adjusting processes in real-time, improving efficiency and reducing waste.\n\n### Concrete Example\n\nConsider the case of autonomous drones used for agricultural monitoring. These drones use sensors to monitor crop health, identify areas needing irrigation, and even apply fertilizers autonomously.\n\n```python\n# Placeholder code for an autonomous drone simulation\nprint('Autonomous drone analyzing crop health and optimizing irrigation.')\n```\n\nIn this scenario, the drones perceive environmental data, decide on necessary actions, and execute them, thus demonstrating the power of agentic engineering in agriculture.\n\n[Interactive Check 1]\n\n## Effectiveness Evaluation of Agentic Systems\n\n### What is Effectiveness Evaluation?\n\n**Effectiveness evaluation** involves assessing how well an agentic system achieves its intended goals and operates under various conditions.\n\n### Why It Matters\n\nEvaluating effectiveness ensures that the systems are reliable, efficient, and meet user expectations. It also helps identify areas for improvement.\n\n### How It Works\n\nEffectiveness can be evaluated through metrics such as:\n\n- Accuracy: How often the system makes correct decisions.\n- Efficiency: Resource usage like time and energy.\n- Robustness: Performance under different environmental conditions.\n\n### When to Conduct Evaluations\n\nEvaluations should be conducted during the development phase and periodically once the system is deployed. This helps maintain system performance and adapt to changing needs.\n\n### Concrete Example\n\nImagine evaluating an autonomous vehicle's effectiveness. Metrics might include the number of successful trips, energy consumption, and response time to obstacles.\n\n[Interactive Check 2]\n\n## Key Takeaways\n\n- Practical problem-solving with agentic engineering involves designing systems that can autonomously perceive, decide, and act.\n- Case studies in agentic engineering provide valuable insights into real-world applications and best practices.\n- Evaluating the effectiveness of agentic systems ensures they meet operational goals and adapt to changing environments.\n- Agentic systems are particularly useful in dynamic and unpredictable environments where complex decision-making is required.\n\n## What's Next\n\nIn the next lesson, we'll explore the ethical considerations and challenges associated with deploying agentic systems in society, including privacy concerns and the potential for unintended consequences.",
+      "interactive_elements": [
+        {
+          "title": "Quick Check",
+          "description": "Test your understanding of the concept above.",
+          "fields": [
+            {
+              "id": "check_q1",
+              "type": "single-choice",
+              "label": "Which statement best describes this concept?",
+              "required": true,
+              "options": [
+                {
+                  "value": "a",
+                  "label": "Option A — correct understanding"
+                },
+                {
+                  "value": "b",
+                  "label": "Option B — common misconception"
+                },
+                {
+                  "value": "c",
+                  "label": "Option C — unrelated concept"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Reflect",
+          "description": "Take a moment to think about what you've learned.",
+          "fields": [
+            {
+              "id": "reflection_q1",
+              "type": "text",
+              "label": "In your own words, explain this concept:",
+              "placeholder": "Type your explanation here..."
+            }
+          ]
+        }
+      ],
+      "is_completed": false,
+      "is_unlocked": false
+    }
+  ],
+  "quizzes": [
+    {
+      "lesson_index": 0,
+      "questions": [
+        {
+          "id": "q2",
+          "question": "True or False: Agentic engineering is not relevant to artificial intelligence.",
+          "question_type": "true-false",
+          "options": null,
+          "correct_answer": "False",
+          "explanation": "The statement is false. Agentic engineering is highly relevant to artificial intelligence as it involves creating systems that can act autonomously, a key aspect of AI."
+        },
+        {
+          "id": "q1",
+          "question": "What is the definition of agentic engineering?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "a",
+              "label": "The study of human consciousness and its impact on technology."
+            },
+            {
+              "value": "b",
+              "label": "The design and use of systems capable of autonomous action in an environment."
+            },
+            {
+              "value": "c",
+              "label": "The process of engineering biological agents for medical purposes."
+            },
+            {
+              "value": "d",
+              "label": "A branch of engineering focusing on the construction of mechanical devices."
+            }
+          ],
+          "correct_answer": "b",
+          "explanation": "The correct answer is 'The design and use of systems capable of autonomous action in an environment.' This is because agentic engineering involves creating systems that can act independently. Other options are incorrect as they describe unrelated fields or misinterpret agentic engineering."
+        },
+        {
+          "id": "q3",
+          "question": "List one core principle of agentic engineering and explain its importance in system design.",
+          "question_type": "short-answer",
+          "options": null,
+          "correct_answer": "Autonomy is a core principle of agentic engineering, as it allows systems to operate independently without human intervention, which is crucial in environments where direct control is impractical.",
+          "explanation": "Autonomy is a fundamental principle because it enables systems to act independently, which is vital for the functionality of agentic systems, especially in unpredictable environments."
+        },
+        {
+          "id": "q4",
+          "question": "Which of the following is a component of agentic systems?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "a",
+              "label": "Control systems"
+            },
+            {
+              "value": "b",
+              "label": "Power converters"
+            },
+            {
+              "value": "c",
+              "label": "Sensors"
+            },
+            {
+              "value": "d",
+              "label": "Networking cables"
+            }
+          ],
+          "correct_answer": "c",
+          "explanation": "Sensors are a key component of agentic systems as they provide the necessary data input for autonomous decision-making. Control systems, while important, are not exclusive to agentic systems, and power converters and networking cables are more general infrastructure components."
+        },
+        {
+          "id": "q5",
+          "question": "Explain how agentic engineering influences the design of systems in robotics.",
+          "question_type": "short-answer",
+          "options": null,
+          "correct_answer": "Agentic engineering influences robotics by enabling the design of systems that can perform tasks autonomously, adapting to their environment without direct human control.",
+          "explanation": "In robotics, the ability to act autonomously is critical for systems to function effectively in dynamic environments, which is a central focus of agentic engineering."
+        },
+        {
+          "id": "q6",
+          "question": "In what way do sensors contribute to the effectiveness of agentic systems?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "a",
+              "label": "They provide decorative aesthetics to the system."
+            },
+            {
+              "value": "b",
+              "label": "They supply data that allows the system to make informed decisions."
+            },
+            {
+              "value": "c",
+              "label": "They reduce the overall energy consumption of the system."
+            },
+            {
+              "value": "d",
+              "label": "They increase the physical durability of the system."
+            }
+          ],
+          "correct_answer": "b",
+          "explanation": "Sensors supply critical data to agentic systems, allowing them to make informed decisions. This is essential for the autonomous functionality of these systems. Other options are incorrect as they do not relate to the decision-making process enabled by sensor data."
+        }
+      ]
+    },
+    {
+      "lesson_index": 1,
+      "questions": [
+        {
+          "id": "q1",
+          "question": "What does autonomy in agentic systems refer to?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "a",
+              "label": "The ability of a system to function without external control"
+            },
+            {
+              "value": "b",
+              "label": "The adaptation of a system to changing environments"
+            },
+            {
+              "value": "c",
+              "label": "The system's ability to regulate its internal processes"
+            },
+            {
+              "value": "d",
+              "label": "The ability to communicate with other systems"
+            }
+          ],
+          "correct_answer": "a",
+          "explanation": "Autonomy in agentic systems refers to the ability of a system to operate independently without external intervention. Options b and c are related to adaptability and self-regulation, not autonomy. Option d is not directly related to the concept of autonomy in this context."
+        },
+        {
+          "id": "q2",
+          "question": "True or False: Adaptability in agentic systems allows them to maintain functionality only in static environments.",
+          "question_type": "true-false",
+          "options": null,
+          "correct_answer": "False",
+          "explanation": "Adaptability in agentic systems is crucial for maintaining functionality in dynamic environments, where conditions can change. Therefore, the statement is false as adaptability is not limited to static environments."
+        },
+        {
+          "id": "q3",
+          "question": "Describe a simple example of a self-regulating system and explain how it applies agentic principles.",
+          "question_type": "short-answer",
+          "options": null,
+          "correct_answer": "A thermostat is a simple example of a self-regulating system. It applies agentic principles by autonomously adjusting the temperature based on pre-set conditions, demonstrating both autonomy and adaptability.",
+          "explanation": "A thermostat is a self-regulating system that uses agentic principles by automatically adjusting to maintain a desired temperature, showing both autonomy and adaptability by responding to environmental changes."
+        },
+        {
+          "id": "q5",
+          "question": "Explain the significance of self-regulation in engineering systems.",
+          "question_type": "short-answer",
+          "options": null,
+          "correct_answer": "Self-regulation allows engineering systems to maintain functionality and performance without constant human intervention, enabling them to adapt to changes in the environment.",
+          "explanation": "Self-regulation is significant because it enables systems to autonomously maintain their performance and adapt to environmental changes, reducing the need for human oversight."
+        },
+        {
+          "id": "q6",
+          "question": "Which aspect of agentic systems is most critical in dynamic environments?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "a",
+              "label": "Autonomy only"
+            },
+            {
+              "value": "b",
+              "label": "Adaptability only"
+            },
+            {
+              "value": "c",
+              "label": "Neither autonomy nor adaptability"
+            },
+            {
+              "value": "d",
+              "label": "Both autonomy and adaptability"
+            }
+          ],
+          "correct_answer": "d",
+          "explanation": "In dynamic environments, both autonomy and adaptability are crucial because systems must operate independently and adjust to changing conditions. Relying on only one aspect would not be sufficient to handle environmental variability effectively."
+        },
+        {
+          "id": "q4",
+          "question": "Which of the following best illustrates the application of agentic principles in engineering systems?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "a",
+              "label": "A manual light switch"
+            },
+            {
+              "value": "b",
+              "label": "An automated irrigation system that adjusts based on soil moisture levels"
+            },
+            {
+              "value": "c",
+              "label": "A clock that requires daily winding"
+            },
+            {
+              "value": "d",
+              "label": "A bike that requires pedaling to move"
+            }
+          ],
+          "correct_answer": "b",
+          "explanation": "An automated irrigation system that adjusts based on soil moisture levels illustrates the application of agentic principles as it independently adapts to environmental conditions. Options a, c, and d require manual intervention and do not demonstrate autonomy or adaptability."
+        }
+      ]
+    },
+    {
+      "lesson_index": 2,
+      "questions": [
+        {
+          "id": "Q6",
+          "question": "Describe a scenario where agentic engineering could be applied to improve a transportation system.",
+          "question_type": "short-answer",
+          "options": null,
+          "correct_answer": "Agentic engineering could be applied in a city's public transport system to optimize routes and schedules based on real-time traffic and commuter data, reducing congestion and improving efficiency.",
+          "explanation": "A correct answer should involve the application of agentic systems to dynamically adapt to real-time data within a transportation context, thus enhancing efficiency and user experience."
+        },
+        {
+          "id": "Q1",
+          "question": "Which of the following best describes 'agentic engineering'?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "A",
+              "label": "A field focused on creating autonomous agents that can make decisions without human intervention."
+            },
+            {
+              "value": "B",
+              "label": "A method of using agents to solve social and ethical dilemmas."
+            },
+            {
+              "value": "C",
+              "label": "A technique for designing agents to improve human-machine interaction."
+            },
+            {
+              "value": "D",
+              "label": "A discipline involving the development and application of systems that can adapt and learn from their environment."
+            }
+          ],
+          "correct_answer": "D",
+          "explanation": "Agentic engineering involves the development of systems that can adapt and learn from their environment, which is captured by option D. Options A and C are more limited in scope, focusing only on autonomy and interaction, respectively. Option B misrepresents the primary focus of agentic engineering."
+        },
+        {
+          "id": "Q2",
+          "question": "True or False: Evaluating the effectiveness of agentic systems is only about measuring their technical performance.",
+          "question_type": "true-false",
+          "options": null,
+          "correct_answer": "False",
+          "explanation": "Evaluating the effectiveness of agentic systems involves more than just technical performance; it also includes assessing their impact on users, adaptability, and alignment with ethical standards. Thus, technical performance is just one aspect of a broader evaluation process."
+        },
+        {
+          "id": "Q3",
+          "question": "Explain one practical problem-solving approach using agentic engineering in a real-world scenario.",
+          "question_type": "short-answer",
+          "options": null,
+          "correct_answer": "In a smart home scenario, agentic engineering can be used to develop systems that learn the habits of inhabitants and automatically adjust the lighting, temperature, and security settings accordingly.",
+          "explanation": "A correct answer must describe a scenario where agentic systems adapt and learn from their environment to solve a problem. The smart home example meets these criteria by showing how agentic systems can enhance comfort and efficiency in daily life."
+        },
+        {
+          "id": "Q4",
+          "question": "Which factor is NOT typically considered when evaluating the effectiveness of an agentic system?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "A",
+              "label": "User satisfaction"
+            },
+            {
+              "value": "B",
+              "label": "System adaptability"
+            },
+            {
+              "value": "C",
+              "label": "Historical cost of development"
+            },
+            {
+              "value": "D",
+              "label": "Alignment with ethical guidelines"
+            }
+          ],
+          "correct_answer": "C",
+          "explanation": "While user satisfaction, system adaptability, and ethical alignment are critical factors in evaluating agentic systems, the historical cost of development is typically not a primary consideration in effectiveness evaluation."
+        },
+        {
+          "id": "Q5",
+          "question": "In a case study of agentic systems applied to healthcare, what was a key takeaway regarding patient outcomes?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "A",
+              "label": "Agentic systems are not effective due to high costs."
+            },
+            {
+              "value": "B",
+              "label": "Agentic systems improved patient engagement and personalized care."
+            },
+            {
+              "value": "C",
+              "label": "Patient outcomes were unaffected by the implementation of agentic systems."
+            },
+            {
+              "value": "D",
+              "label": "Agentic systems led to an increase in medical errors."
+            }
+          ],
+          "correct_answer": "B",
+          "explanation": "The key takeaway from the case study of agentic systems in healthcare is that they can enhance patient engagement and provide personalized care, thus improving outcomes. Options A, C, and D contradict the generally positive impact observed in such systems."
+        }
+      ]
+    }
+  ],
+  "created_at": "2026-03-03T00:27:55.081911Z"
+}

@@ -1,10 +1,10 @@
-import { ArrowLeft, ArrowRight, CheckCircle, Clock } from 'lucide-react';
-import { useEffect } from 'react';
+import { ArrowLeft, ArrowRight, CheckCircle, Clock, Loader2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { api } from '../api/client';
-import { DynamicUI } from '../components/DynamicUI';
+import { InteractiveCheck } from '../components/InteractiveCheck';
 import { useCourseStore } from '../store/courseStore';
 import type { DynamicFormSchema } from '../types/dynamic-ui';
 
@@ -12,16 +12,51 @@ export function LessonPage() {
   const { id, idx } = useParams<{ id: string; idx: string }>();
   const navigate = useNavigate();
   const course = useCourseStore((s) => s.course);
+  const courseId = useCourseStore((s) => s.courseId);
+  const setCourse = useCourseStore((s) => s.setCourse);
+  const setCourseId = useCourseStore((s) => s.setCourseId);
   const markLessonComplete = useCourseStore((s) => s.markLessonComplete);
+  const [loading, setLoading] = useState(false);
 
   const lessonIdx = parseInt(idx ?? '0', 10);
   const lesson = course?.lessons.find((l) => l.index === lessonIdx);
 
+  // Deep-link: fetch course from API if not in store or mismatched
   useEffect(() => {
-    if (id && course && !course.lessons.find(l => l.index === lessonIdx)?.content) {
-      api.generateLesson(id, lessonIdx).catch(() => {});
+    if (id && (!course || courseId !== id)) {
+      setLoading(true);
+      api.getCourse(id)
+        .then(({ course }) => {
+          setCourse(course);
+          setCourseId(id);
+        })
+        .catch(() => {})
+        .finally(() => setLoading(false));
     }
-  }, [id, lessonIdx, course]);
+  }, [id, course, courseId, setCourse, setCourseId]);
+
+  // Generate lesson content on demand if missing, and update store with result
+  useEffect(() => {
+    if (id && course && courseId === id && !course.lessons.find(l => l.index === lessonIdx)?.content) {
+      api.generateLesson(id, lessonIdx)
+        .then(({ lesson: generated }) => {
+          const updatedLessons = course.lessons.map((l) =>
+            l.index === generated.index ? { ...l, ...generated } : l
+          );
+          setCourse({ ...course, lessons: updatedLessons });
+        })
+        .catch(() => {});
+    }
+  }, [id, lessonIdx, course, courseId, setCourse]);
+
+  if (loading) {
+    return (
+      <div className="py-20 text-center">
+        <Loader2 className="h-6 w-6 animate-spin text-primary mx-auto mb-2" />
+        <p className="text-sm text-muted-foreground">Loading course...</p>
+      </div>
+    );
+  }
 
   if (!course || !lesson) {
     return (
@@ -76,11 +111,12 @@ export function LessonPage() {
       </article>
 
       {lesson.interactive_elements.map((schema, i) => (
-        <DynamicUI
+        <InteractiveCheck
           key={i}
-          schema={schema as unknown as DynamicFormSchema}
-          onSubmit={() => {}}
-          submitLabel="Check Answer"
+          schema={schema as DynamicFormSchema}
+          courseId={id!}
+          lessonIdx={lessonIdx}
+          elementIdx={i}
         />
       ))}
 

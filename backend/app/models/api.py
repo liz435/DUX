@@ -44,12 +44,43 @@ class UpdateLessonRequest(BaseModel):
     is_completed: bool | None = None
 
 
+class UpdateLessonOutlineRequest(BaseModel):
+    """PATCH /api/courses/{id}/outline/{lesson_idx} — edit lesson metadata."""
+
+    title: str | None = None
+    summary: str | None = None
+    key_topics: list[str] | None = None
+    estimated_minutes: int | None = Field(None, ge=1, le=120)
+    difficulty: float | None = Field(None, ge=0.0, le=1.0)
+    module: str | None = None
+
+
 class SubmitFeedbackRequest(BaseModel):
     """POST /api/courses/{id}/feedback — user interaction data."""
 
     lesson_index: int
     interaction_type: str
     data: dict[str, Any] = Field(default_factory=dict)
+
+
+class CheckInteractiveRequest(BaseModel):
+    """POST /api/courses/{id}/lessons/{idx}/check/{element_idx} — check answer."""
+
+    lesson_index: int
+    element_index: int
+    answers: dict[str, Any] = Field(
+        ..., description="Map of field_id -> user answer"
+    )
+
+
+class CheckInteractiveResponse(BaseModel):
+    """Response for interactive answer checking."""
+
+    correct: bool
+    score: float = Field(ge=0.0, le=1.0)
+    correct_answer: dict[str, Any] = Field(default_factory=dict)
+    explanation: str = ""
+    feedback: str = ""
 
 
 # ---------------------------------------------------------------------------

@@ -74,6 +74,8 @@ export interface DynamicFormSchema {
   title?: string;
   description?: string;
   fields: Field[];
+  correct_answer?: Record<string, any>;
+  explanation?: string;
 }
 
 // Form values type

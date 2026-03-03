@@ -4,6 +4,7 @@ import { BookOpen, Zap } from 'lucide-react';
 import { api, streamCourseGeneration } from '../api/client';
 import type { CourseSummary } from '../api/client';
 import { CourseGeneratingView } from '../components/course/CourseGeneratingView';
+import { SyllabusReviewView } from '../components/course/SyllabusReviewView';
 import { DynamicUI } from '../components/DynamicUI';
 import { useCourseStore } from '../store/courseStore';
 import type { DynamicFormSchema, FormValues } from '../types/dynamic-ui';
@@ -56,16 +57,23 @@ const topicSchema: DynamicFormSchema = {
 export function HomePage() {
   const navigate = useNavigate();
   const {
-    isGenerating, generationSteps, error,
-    setCourseId, setGenerating, addStep, setCourse, setError, reset,
+    course, courseId,
+    isGenerating, isAwaitingConfirmation, generationSteps, error,
+    setCourseId, setGenerating, setAwaitingConfirmation, addStep, setCourse, setError, reset,
   } = useCourseStore();
   const [submitted, setSubmitted] = useState(false);
+  const [isConfirming, setIsConfirming] = useState(false);
   const [savedCourses, setSavedCourses] = useState<CourseSummary[]>([]);
 
   useEffect(() => {
-    api.listCourses().then(({ courses }) => setSavedCourses(courses)).catch(() => {});
+    const refresh = () =>
+      api.listCourses().then(({ courses }) => setSavedCourses(courses)).catch(() => {});
+    refresh();
+    window.addEventListener('focus', refresh);
+    return () => window.removeEventListener('focus', refresh);
   }, []);
 
+  // Phase 1: Submit preferences → generate outline only
   const handleSubmit = useCallback(
     async (values: FormValues) => {
       reset();
@@ -85,12 +93,14 @@ export function HomePage() {
           course_id,
           (step) => addStep(step),
           async () => {
+            // Phase 1 done — fetch the draft course and show syllabus review
             try {
               const { course } = await api.getCourse(course_id);
               setCourse(course);
-              navigate(`/courses/${course_id}/lessons/0`);
+              setAwaitingConfirmation(true);
+              api.listCourses().then(({ courses }) => setSavedCourses(courses)).catch(() => {});
             } catch {
-              setError('Failed to load course after generation.');
+              setError('Failed to load course outline.');
             }
           },
           (err) => setError(err.message),
@@ -99,15 +109,65 @@ export function HomePage() {
         setError(err instanceof Error ? err.message : 'Failed to start generation.');
       }
     },
-    [navigate, reset, setCourseId, setGenerating, addStep, setCourse, setError],
+    [reset, setCourseId, setGenerating, addStep, setCourse, setAwaitingConfirmation, setError],
   );
 
+  // Phase 2: Confirm syllabus → generate full content
+  const handleConfirm = useCallback(async () => {
+    if (!courseId) return;
+    setIsConfirming(true);
+
+    try {
+      await api.confirmCourse(courseId);
+      setAwaitingConfirmation(false);
+      setGenerating(true);
+
+      streamCourseGeneration(
+        courseId,
+        (step) => addStep(step),
+        async () => {
+          try {
+            const { course } = await api.getCourse(courseId);
+            setCourse(course);
+            api.listCourses().then(({ courses }) => setSavedCourses(courses)).catch(() => {});
+            navigate(`/courses/${courseId}/lessons/0`);
+          } catch {
+            setError('Failed to load course after generation.');
+          }
+        },
+        (err) => setError(err.message),
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to confirm course.');
+    } finally {
+      setIsConfirming(false);
+    }
+  }, [courseId, navigate, setAwaitingConfirmation, setGenerating, addStep, setCourse, setError]);
+
+  const handleReset = useCallback(() => {
+    setSubmitted(false);
+    reset();
+  }, [reset]);
+
+  // Syllabus review view (Phase 1 complete, awaiting confirmation)
+  if (isAwaitingConfirmation && course) {
+    return (
+      <SyllabusReviewView
+        course={course}
+        onConfirm={handleConfirm}
+        onReset={handleReset}
+        isConfirming={isConfirming}
+      />
+    );
+  }
+
+  // Generation progress view (Phase 1 planning or Phase 2 content)
   if (submitted && (isGenerating || generationSteps.length > 0)) {
     return (
       <CourseGeneratingView
         steps={generationSteps}
         error={error}
-        onRetry={() => { setSubmitted(false); reset(); }}
+        onRetry={handleReset}
       />
     );
   }
@@ -143,7 +203,10 @@ export function HomePage() {
                   api.getCourse(c.id).then(({ course }) => {
                     setCourse(course);
                     setCourseId(c.id);
-                    navigate(`/courses/${c.id}/lessons/0`);
+                    const resumeLesson = course.lessons.find(
+                      (l) => l.is_unlocked && !l.is_completed
+                    ) ?? course.lessons[course.lessons.length - 1];
+                    navigate(`/courses/${c.id}/lessons/${resumeLesson?.index ?? 0}`);
                   });
                 }}
                 className="w-full text-left rounded-lg border bg-card p-4 hover:border-primary/50 hover:shadow-sm transition-all"

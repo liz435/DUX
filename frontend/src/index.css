@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+@theme inline {
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+  --color-node-line: hsl(var(--border));
+  --color-node-glow: hsl(var(--primary) / 0.15);
+}
+
 @layer base {
   :root {
     --background: 250 33% 99%;
@@ -22,6 +32,11 @@
     --input: 240 10% 91%;
     --ring: 250 84% 60%;
     --radius: 0.75rem;
+    --chart-1: 42 100% 55%;
+    --chart-2: 185 50% 45%;
+    --chart-3: 215 30% 40%;
+    --chart-4: 40 80% 55%;
+    --chart-5: 35 75% 50%;
   }
 
   .dark {
@@ -44,6 +59,11 @@
     --border: 240 10% 18%;
     --input: 240 10% 18%;
     --ring: 250 84% 65%;
+    --chart-1: 42 100% 60%;
+    --chart-2: 185 50% 50%;
+    --chart-3: 215 30% 50%;
+    --chart-4: 40 80% 60%;
+    --chart-5: 35 75% 55%;
   }
 }
 

@@ -1,4 +1,5 @@
 import React from "react";
+import { Circle, CheckCircle2 } from "lucide-react";
 import type { SingleChoiceField } from "@/types/dynamic-ui";
 
 interface SingleChoiceFieldComponentProps {
@@ -12,8 +13,11 @@ export const SingleChoiceFieldComponent: React.FC<SingleChoiceFieldComponentProp
   value,
   onChange,
 }) => {
+  // Use vertical layout for longer options (> 3 options or any label > 30 chars)
+  const useVertical = field.options.length > 3 || field.options.some(o => o.label.length > 30);
+
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <label className="text-sm font-semibold text-foreground">
         {field.label}
         {field.required && <span className="text-destructive ml-1">*</span>}
@@ -21,7 +25,7 @@ export const SingleChoiceFieldComponent: React.FC<SingleChoiceFieldComponentProp
       {field.description && (
         <p className="text-xs text-muted-foreground">{field.description}</p>
       )}
-      <div className="flex gap-2">
+      <div className={useVertical ? "space-y-2" : "flex gap-2"}>
         {field.options.map((option) => {
           const selected = value === option.value;
           return (
@@ -29,18 +33,27 @@ export const SingleChoiceFieldComponent: React.FC<SingleChoiceFieldComponentProp
               key={option.value}
               type="button"
               onClick={() => onChange(option.value)}
-              className={`flex-1 rounded-xl border-2 px-3 py-2.5 text-center cursor-pointer transition-all duration-150 ${
+              className={`${useVertical ? 'w-full' : 'flex-1'} flex items-start gap-3 rounded-xl border-2 px-4 py-3 text-left cursor-pointer transition-all duration-200 ${
                 selected
-                  ? "border-primary bg-primary text-primary-foreground shadow-sm bg-black/20"
-                  : "border-border hover:border-primary/40 hover:bg-muted/40 "
+                  ? "border-primary bg-primary/5 shadow-sm"
+                  : "border-border hover:border-primary/40 hover:bg-muted/30"
               }`}
             >
-              <div className={`text-sm font-medium ${selected ? "text-primary-foreground" : "text-foreground"}`}>
-                {option.label}
+              <div className="mt-0.5 shrink-0">
+                {selected ? (
+                  <CheckCircle2 className="h-4 w-4 text-primary" />
+                ) : (
+                  <Circle className="h-4 w-4 text-muted-foreground/40" />
+                )}
               </div>
-              {option.description && (
-                <div className={`text-xs mt-0.5 leading-tight ${selected ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{option.description}</div>
-              )}
+              <div className="flex-1 min-w-0">
+                <div className={`text-sm font-medium ${selected ? "text-primary" : "text-foreground"}`}>
+                  {option.label}
+                </div>
+                {option.description && (
+                  <div className="text-xs mt-0.5 leading-tight text-muted-foreground">{option.description}</div>
+                )}
+              </div>
             </button>
           );
         })}

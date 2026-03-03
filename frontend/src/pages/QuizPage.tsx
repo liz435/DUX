@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 import { api, type GradeResult } from '../api/client';
 import { DynamicUI } from '../components/DynamicUI';
 import { QuizResults } from '../components/course/QuizResults';
@@ -10,11 +11,38 @@ export function QuizPage() {
   const { id, idx } = useParams<{ id: string; idx: string }>();
   const navigate = useNavigate();
   const course = useCourseStore((s) => s.course);
+  const courseId = useCourseStore((s) => s.courseId);
+  const setCourse = useCourseStore((s) => s.setCourse);
+  const setCourseId = useCourseStore((s) => s.setCourseId);
   const [result, setResult] = useState<GradeResult | null>(null);
   const [grading, setGrading] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // Deep-link: fetch course from API if not in store or mismatched
+  useEffect(() => {
+    if (id && (!course || courseId !== id)) {
+      setLoading(true);
+      api.getCourse(id)
+        .then(({ course }) => {
+          setCourse(course);
+          setCourseId(id);
+        })
+        .catch(() => {})
+        .finally(() => setLoading(false));
+    }
+  }, [id, course, courseId, setCourse, setCourseId]);
 
   const quizIdx = parseInt(idx ?? '0', 10);
   const quiz = course?.quizzes[quizIdx];
+
+  if (loading) {
+    return (
+      <div className="py-20 text-center">
+        <Loader2 className="h-6 w-6 animate-spin text-primary mx-auto mb-2" />
+        <p className="text-sm text-muted-foreground">Loading quiz...</p>
+      </div>
+    );
+  }
 
   if (!course || !quiz) {
     return (

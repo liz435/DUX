@@ -9,8 +9,9 @@ interface Props {
 
 const STEP_CFG: Record<string, { color: string; icon: string; indent: boolean }> = {
   planning:          { color: 'text-blue-400',   icon: '◆', indent: false },
-  outline_ready:     { color: 'text-green-400',  icon: '✓', indent: false },
-  generating_lesson: { color: 'text-cyan-400',   icon: '◈', indent: true  },
+  outline_ready:           { color: 'text-green-400',  icon: '✓', indent: false },
+  awaiting_confirmation:   { color: 'text-amber-400',  icon: '⏸', indent: false },
+  generating_lesson:       { color: 'text-cyan-400',   icon: '◈', indent: true  },
   lesson_ready:      { color: 'text-green-400',  icon: '✓', indent: true  },
   generating_quiz:   { color: 'text-amber-400',  icon: '◈', indent: true  },
   quiz_ready:        { color: 'text-amber-400',  icon: '✓', indent: true  },
@@ -61,7 +62,7 @@ export function CourseGeneratingView({ steps, error, onRetry }: Props) {
     }
   }, [revealed, typed]);
 
-  const isDone  = steps.some(s => s.type === 'complete');
+  const isDone  = steps.some(s => s.type === 'complete' || s.type === 'awaiting_confirmation');
   const isTyping = revealed < steps.length;
   const typingStep = isTyping ? steps[revealed] : null;
 

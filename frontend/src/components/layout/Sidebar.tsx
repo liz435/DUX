@@ -1,4 +1,4 @@
-import { BookOpen, CheckCircle, Circle, Lock, TrendingUp } from 'lucide-react';
+import { BookOpen, CheckCircle, Circle, Lock, Pencil, TrendingUp } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
 import { useCourseStore } from '../../store/courseStore';
 
@@ -79,7 +79,14 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="mt-4 pt-4 border-t">
+      <div className="mt-4 pt-4 border-t space-y-2">
+        <Link
+          to={`/courses/${course.id}/syllabus`}
+          className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <Pencil className="h-3.5 w-3.5" />
+          Edit Syllabus
+        </Link>
         <Link
           to={`/courses/${course.id}/progress`}
           className="flex items-center gap-2 text-xs text-muted-foreground hover:text-foreground transition-colors"

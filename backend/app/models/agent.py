@@ -84,6 +84,7 @@ class AgentStep(BaseModel):
     type: Literal[
         "planning",
         "outline_ready",
+        "awaiting_confirmation",
         "generating_lesson",
         "lesson_ready",
         "generating_quiz",

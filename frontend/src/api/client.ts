@@ -65,10 +65,35 @@ export const api = {
       body: JSON.stringify({ answers }),
     }),
 
+  updateLessonOutline: (courseId: string, lessonIdx: number, data: LessonOutlineUpdate) =>
+    request<{ course: Course }>(`/courses/${courseId}/outline/${lessonIdx}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+
+  confirmCourse: (courseId: string) =>
+    request<{ course_id: string }>(`/courses/${courseId}/confirm`, {
+      method: 'POST',
+    }),
+
   submitFeedback: (courseId: string, data: { lesson_index: number; interaction_type: string; data: Record<string, unknown> }) =>
     request<{ message: string; adaptations: Record<string, unknown> }>(
       `/courses/${courseId}/feedback`,
       { method: 'POST', body: JSON.stringify(data) },
+    ),
+
+  checkInteractiveAnswer: (
+    courseId: string,
+    lessonIdx: number,
+    elementIdx: number,
+    answers: Record<string, any>,
+  ) =>
+    request<CheckInteractiveResponse>(
+      `/courses/${courseId}/lessons/${lessonIdx}/check/${elementIdx}`,
+      {
+        method: 'POST',
+        body: JSON.stringify({ lesson_index: lessonIdx, element_index: elementIdx, answers }),
+      },
     ),
 };
 
@@ -79,6 +104,7 @@ export function streamCourseGeneration(
   onError: (err: Error) => void,
 ) {
   const source = new EventSource(`${API_BASE}/courses/${courseId}/stream`);
+  let closed = false;
 
   const handleEvent = (e: MessageEvent) => {
     try {
@@ -89,31 +115,50 @@ export function streamCourseGeneration(
     }
   };
 
+  const handleDone = () => {
+    if (closed) return;
+    closed = true;
+    source.close();
+    onDone();
+  };
+
   const eventTypes = [
-    'planning', 'outline_ready', 'generating_lesson', 'lesson_ready',
-    'generating_quiz', 'quiz_ready', 'tutor_feedback', 'complete', 'error',
+    'planning', 'outline_ready', 'awaiting_confirmation', 'generating_lesson',
+    'lesson_ready', 'generating_quiz', 'quiz_ready', 'tutor_feedback', 'complete', 'error',
   ];
   eventTypes.forEach(t => source.addEventListener(t, handleEvent));
 
-  source.addEventListener('complete', () => {
-    source.close();
-    onDone();
-  });
+  source.addEventListener('complete', handleDone);
+  source.addEventListener('awaiting_confirmation', handleDone);
 
   source.addEventListener('error', () => {
+    if (closed) return;
+    closed = true;
     source.close();
     onError(new Error('SSE connection lost'));
   });
 
-  return () => source.close();
+  return () => {
+    closed = true;
+    source.close();
+  };
 }
 
 // Types matching backend schemas
 export interface AgentStep {
-  type: 'planning' | 'outline_ready' | 'generating_lesson' | 'lesson_ready' |
-    'generating_quiz' | 'quiz_ready' | 'tutor_feedback' | 'complete' | 'error';
+  type: 'planning' | 'outline_ready' | 'awaiting_confirmation' | 'generating_lesson' |
+    'lesson_ready' | 'generating_quiz' | 'quiz_ready' | 'tutor_feedback' | 'complete' | 'error';
   message: string;
   data?: Record<string, unknown>;
+}
+
+export interface LessonOutlineUpdate {
+  title?: string;
+  summary?: string;
+  key_topics?: string[];
+  estimated_minutes?: number;
+  difficulty?: number;
+  module?: string;
 }
 
 export interface Lesson {
@@ -123,6 +168,11 @@ export interface Lesson {
   key_topics: string[];
   has_quiz: boolean;
   estimated_minutes: number;
+  module: string;
+  difficulty: number;
+  prerequisites: number[];
+  learning_objectives: Record<string, string>[];
+  key_terms: string[];
   content: string;
   interactive_elements: Record<string, unknown>[];
   is_completed: boolean;
@@ -165,4 +215,12 @@ export interface GradeResult {
     correct_answer: string;
     explanation: string;
   }[];
+}
+
+export interface CheckInteractiveResponse {
+  correct: boolean;
+  score: number;
+  correct_answer: Record<string, any>;
+  explanation: string;
+  feedback: string;
 }

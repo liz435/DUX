@@ -1,10 +1,39 @@
-import { CheckCircle, Circle, Lock, Plus, TrendingUp } from 'lucide-react';
+import { CheckCircle, Circle, Lock, Loader2, Plus, TrendingUp } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { api } from '../api/client';
 import { useCourseStore } from '../store/courseStore';
 
 export function ProgressPage() {
   const { id } = useParams<{ id: string }>();
   const course = useCourseStore((s) => s.course);
+  const courseId = useCourseStore((s) => s.courseId);
+  const setCourse = useCourseStore((s) => s.setCourse);
+  const setCourseId = useCourseStore((s) => s.setCourseId);
+  const [loading, setLoading] = useState(false);
+
+  // Deep-link: fetch course from API if not in store or mismatched
+  useEffect(() => {
+    if (id && (!course || courseId !== id)) {
+      setLoading(true);
+      api.getCourse(id)
+        .then(({ course }) => {
+          setCourse(course);
+          setCourseId(id);
+        })
+        .catch(() => {})
+        .finally(() => setLoading(false));
+    }
+  }, [id, course, courseId, setCourse, setCourseId]);
+
+  if (loading) {
+    return (
+      <div className="py-20 text-center">
+        <Loader2 className="h-6 w-6 animate-spin text-primary mx-auto mb-2" />
+        <p className="text-sm text-muted-foreground">Loading course...</p>
+      </div>
+    );
+  }
 
   if (!course) {
     return (

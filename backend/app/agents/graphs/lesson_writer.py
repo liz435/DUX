@@ -99,23 +99,38 @@ def draft_content_node(state: LessonWriterState) -> dict[str, Any]:
 def add_interactive_node(state: LessonWriterState) -> dict[str, Any]:
     """Replace {{CHECK:n}} markers with DynamicUI schemas."""
     content = state.get("draft_content", "")
+    prefs = state["course_preferences"]
+    outline = state["outline"]
     tools = get_content_tools()
     interactive_elements: list[dict[str, Any]] = []
 
     check_types = ["recall", "reflection", "exploration"]
 
+    # Build rich context string with level and topic metadata
+    context_prefix = f"[Level: {prefs.level}] [Topic: {outline.title}] "
+
     for i in range(1, 4):
         marker = f"{{{{CHECK:{i}}}}}"
         if marker in content:
             check_type = check_types[(i - 1) % len(check_types)]
-            schema = tools[2].invoke({"context": content[:200], "check_type": check_type})
+            # Extract surrounding context near the marker for better relevance
+            marker_pos = content.find(marker)
+            start = max(0, marker_pos - 300)
+            local_context = content[start:marker_pos]
+            schema = tools[2].invoke({
+                "context": context_prefix + local_context,
+                "check_type": check_type,
+            })
             interactive_elements.append(schema)
             content = content.replace(marker, f"[Interactive Check {i}]", 1)
 
     # If no markers found, add default interactive elements
     if not interactive_elements:
         for check_type in ["recall", "reflection"]:
-            schema = tools[2].invoke({"context": content[:200], "check_type": check_type})
+            schema = tools[2].invoke({
+                "context": context_prefix + content[:400],
+                "check_type": check_type,
+            })
             interactive_elements.append(schema)
 
     return {

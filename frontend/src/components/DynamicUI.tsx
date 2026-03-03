@@ -14,6 +14,7 @@ interface DynamicUIProps {
   submitLabel?: string;
   className?: string;
   initialValues?: FormValues;
+  disabled?: boolean;
 }
 
 export const DynamicUI: React.FC<DynamicUIProps> = ({
@@ -22,6 +23,7 @@ export const DynamicUI: React.FC<DynamicUIProps> = ({
   submitLabel = "Submit",
   className = "",
   initialValues = {},
+  disabled = false,
 }) => {
   const getDefaultValues = () => {
     const defaultValues: FormValues = {};
@@ -106,7 +108,7 @@ export const DynamicUI: React.FC<DynamicUIProps> = ({
           )}
           <Button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || disabled}
             className="w-full h-11 rounded-xl font-medium border-2"
           >
             {isSubmitting ? "Submitting..." : submitLabel}

@@ -7,12 +7,14 @@ interface CourseState {
   course: Course | null;
   courseId: string | null;
   isGenerating: boolean;
+  isAwaitingConfirmation: boolean;
   generationSteps: AgentStep[];
   error: string | null;
 
   setCourse: (course: Course) => void;
   setCourseId: (id: string) => void;
   setGenerating: (v: boolean) => void;
+  setAwaitingConfirmation: (v: boolean) => void;
   addStep: (step: AgentStep) => void;
   setError: (err: string | null) => void;
   markLessonComplete: (idx: number) => void;
@@ -25,12 +27,19 @@ export const useCourseStore = create<CourseState>()(
       course: null,
       courseId: null,
       isGenerating: false,
+      isAwaitingConfirmation: false,
       generationSteps: [],
       error: null,
 
       setCourse: (course) => set({ course, isGenerating: false }),
       setCourseId: (courseId) => set({ courseId }),
-      setGenerating: (isGenerating) => set({ isGenerating, generationSteps: isGenerating ? [] : undefined as unknown as AgentStep[] }),
+      setGenerating: (isGenerating) =>
+        set((s) => ({
+          isGenerating,
+          generationSteps: isGenerating ? [] : s.generationSteps,
+        })),
+      setAwaitingConfirmation: (isAwaitingConfirmation) =>
+        set({ isAwaitingConfirmation, isGenerating: false }),
       addStep: (step) =>
         set((s) => ({ generationSteps: [...s.generationSteps, step] })),
       setError: (error) => set({ error, isGenerating: false }),
@@ -53,6 +62,7 @@ export const useCourseStore = create<CourseState>()(
           course: null,
           courseId: null,
           isGenerating: false,
+          isAwaitingConfirmation: false,
           generationSteps: [],
           error: null,
         }),

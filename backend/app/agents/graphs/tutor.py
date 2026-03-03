@@ -5,6 +5,7 @@ Nodes:  assess → decide → generate_feedback → adapt
 
 from __future__ import annotations
 
+import json
 from typing import Any
 
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -75,12 +76,15 @@ def generate_feedback_node(state: TutorState) -> dict[str, Any]:
     scores = state.get("quiz_scores", [])
 
     llm = get_llm(purpose="writing")
+    scores_by_lesson = {f"Lesson {i}": round(s, 2) for i, s in enumerate(scores)}
     system_prompt = TUTOR_SYSTEM.format(
         level=profile.get("level", "intermediate"),
-        quiz_scores=", ".join(f"{s:.0%}" for s in scores) if scores else "none yet",
+        topic=profile.get("topic", "the course"),
+        quiz_scores=json.dumps(scores_by_lesson) if scores else "{}",
         completed_count=profile.get("completed_lessons", 0),
         total_lessons=profile.get("total_lessons", 0),
-        weak_topics=", ".join(assessment.get("weak_topics", [])) or "none identified",
+        missed_questions=json.dumps(state.get("missed_questions", [])),
+        time_per_lesson=json.dumps(state.get("time_per_lesson", {})),
     )
 
     try:
@@ -94,11 +98,12 @@ def generate_feedback_node(state: TutorState) -> dict[str, Any]:
                 ),
             ]
         )
-        feedback = result.feedback
+        return {
+            "feedback": result.feedback,
+            "adaptations": result.adaptations,
+        }
     except Exception:
-        feedback = _fallback_feedback(assessment, action_plan)
-
-    return {"feedback": feedback}
+        return {"feedback": _fallback_feedback(assessment, action_plan)}
 
 
 def adapt_next_lesson_node(state: TutorState) -> dict[str, Any]:

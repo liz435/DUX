@@ -28,6 +28,12 @@ class LessonOutline(BaseModel):
     key_topics: list[str] = Field(min_length=2, max_length=6)
     has_quiz: bool
     estimated_minutes: int = Field(ge=1, le=120)
+    # v2 planner fields (optional for backward compat)
+    module: str = ""
+    prerequisites: list[int] = Field(default_factory=list)
+    learning_objectives: list[dict[str, str]] = Field(default_factory=list)
+    key_terms: list[str] = Field(default_factory=list)
+    difficulty: float = 0.5
 
 
 class Lesson(LessonOutline):

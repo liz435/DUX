@@ -49,9 +49,17 @@ def generate_questions_node(state: QuizGeneratorState) -> dict[str, Any]:
     llm = get_llm(purpose="assessment")
     question_count = min(4 + len(key_concepts) // 2, 6)
 
+    objectives_str = "\n".join(
+        f"  - [{o.get('blooms_level', 'Apply')}] {o.get('objective', '')}"
+        for o in lesson.learning_objectives
+    ) or "  - [Apply] Understand the key concepts"
+
     system_prompt = QUIZ_GENERATOR_SYSTEM.format(
         title=lesson.title,
+        lesson_summary=lesson.summary,
         key_concepts=", ".join(key_concepts),
+        key_terms=", ".join(lesson.key_terms) if lesson.key_terms else ", ".join(lesson.key_topics[:3]),
+        learning_objectives=objectives_str,
         level=prefs.level,
         question_count=question_count,
     )

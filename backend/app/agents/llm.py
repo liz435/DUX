@@ -7,6 +7,7 @@ from typing import Literal
 from langchain_core.language_models.chat_models import BaseChatModel
 
 from app.config import get_settings
+from app.state import get_provider_override
 
 
 def get_llm(
@@ -21,8 +22,9 @@ def get_llm(
     settings = get_settings()
     is_fast = purpose == "validation"
     model_name = settings.llm_model_fast if is_fast else settings.llm_model_capable
+    provider = get_provider_override() or settings.llm_provider
 
-    if settings.llm_provider == "anthropic":
+    if provider == "anthropic":
         from langchain_anthropic import ChatAnthropic
 
         return ChatAnthropic(

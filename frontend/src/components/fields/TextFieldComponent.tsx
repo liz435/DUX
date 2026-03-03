@@ -1,6 +1,5 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import type { TextField } from "@/types/dynamic-ui";
 
 interface TextFieldComponentProps {
@@ -16,12 +15,12 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
 }) => {
   return (
     <div className="space-y-2">
-      <Label htmlFor={field.id}>
+      <label htmlFor={field.id} className="text-sm font-semibold text-foreground">
         {field.label}
-        {field.required && <span className="text-red-500 ml-1">*</span>}
-      </Label>
+        {field.required && <span className="text-destructive ml-1">*</span>}
+      </label>
       {field.description && (
-        <p className="text-sm text-muted-foreground">{field.description}</p>
+        <p className="text-xs text-muted-foreground">{field.description}</p>
       )}
       <Input
         id={field.id}
@@ -30,6 +29,7 @@ export const TextFieldComponent: React.FC<TextFieldComponentProps> = ({
         value={value || ""}
         onChange={(e) => onChange(e.target.value)}
         required={field.required}
+        className="h-11 rounded-xl border-2 border-border focus:border-primary transition-colors"
       />
     </div>
   );

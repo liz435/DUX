@@ -1,6 +1,4 @@
 import React from "react";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { SingleChoiceField } from "@/types/dynamic-ui";
 
 interface SingleChoiceFieldComponentProps {
@@ -9,38 +7,44 @@ interface SingleChoiceFieldComponentProps {
   onChange: (value: string) => void;
 }
 
-export const SingleChoiceFieldComponent: React.FC<
-  SingleChoiceFieldComponentProps
-> = ({ field, value, onChange }) => {
+export const SingleChoiceFieldComponent: React.FC<SingleChoiceFieldComponentProps> = ({
+  field,
+  value,
+  onChange,
+}) => {
   return (
-    <div className="space-y-3">
-      <Label>
+    <div className="space-y-2">
+      <label className="text-sm font-semibold text-foreground">
         {field.label}
-        {field.required && <span className="text-red-500 ml-1">*</span>}
-      </Label>
+        {field.required && <span className="text-destructive ml-1">*</span>}
+      </label>
       {field.description && (
-        <p className="text-sm text-muted-foreground">{field.description}</p>
+        <p className="text-xs text-muted-foreground">{field.description}</p>
       )}
-      <RadioGroup value={value} onValueChange={onChange}>
-        {field.options.map((option) => (
-          <div key={option.value} className="flex items-start space-x-2">
-            <RadioGroupItem value={option.value} id={`${field.id}-${option.value}`} />
-            <div className="grid gap-1.5 leading-none">
-              <label
-                htmlFor={`${field.id}-${option.value}`}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-              >
+      <div className="flex gap-2">
+        {field.options.map((option) => {
+          const selected = value === option.value;
+          return (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => onChange(option.value)}
+              className={`flex-1 rounded-xl border-2 px-3 py-2.5 text-center cursor-pointer transition-all duration-150 ${
+                selected
+                  ? "border-primary bg-primary text-primary-foreground shadow-sm bg-black/20"
+                  : "border-border hover:border-primary/40 hover:bg-muted/40 "
+              }`}
+            >
+              <div className={`text-sm font-medium ${selected ? "text-primary-foreground" : "text-foreground"}`}>
                 {option.label}
-              </label>
+              </div>
               {option.description && (
-                <p className="text-sm text-muted-foreground">
-                  {option.description}
-                </p>
+                <div className={`text-xs mt-0.5 leading-tight ${selected ? "text-primary-foreground/70" : "text-muted-foreground"}`}>{option.description}</div>
               )}
-            </div>
-          </div>
-        ))}
-      </RadioGroup>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 };

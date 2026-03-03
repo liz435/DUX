@@ -8,7 +8,9 @@ from fastapi import APIRouter, BackgroundTasks, HTTPException
 from sse_starlette.sse import EventSourceResponse
 
 from app.models.api import (
+    CourseListResponse,
     CourseResponse,
+    CourseSummary,
     CreateCourseRequest,
     CreateCourseResponse,
     FeedbackResponse,
@@ -18,17 +20,39 @@ from app.models.api import (
     QuestionResult,
     QuizResponse,
     SubmitFeedbackRequest,
+    UpdateLessonRequest,
 )
 from app.services.course_service import (
     create_step_queue,
+    get_all_courses,
     get_course,
     get_step_queue,
     grade_quiz_answers,
     remove_step_queue,
     run_course_generation,
+    store_course,
 )
 
 router = APIRouter(prefix="/api")
+
+
+@router.get("/courses", response_model=CourseListResponse)
+async def list_courses() -> CourseListResponse:
+    """Return summaries of all saved courses."""
+    courses = get_all_courses()
+    summaries = [
+        CourseSummary(
+            id=c.id,
+            title=c.title,
+            topic=c.topic,
+            level=c.level,
+            lesson_count=len(c.lessons),
+            completed_count=sum(1 for l in c.lessons if l.is_completed),
+            created_at=c.created_at.isoformat(),
+        )
+        for c in sorted(courses, key=lambda c: c.created_at, reverse=True)
+    ]
+    return CourseListResponse(courses=summaries)
 
 
 @router.post("/courses", status_code=201, response_model=CreateCourseResponse)
@@ -83,6 +107,36 @@ async def generate_lesson(course_id: str, lesson_idx: int) -> LessonResponse:
         raise HTTPException(status_code=404, detail="Course not found.")
     if lesson_idx < 0 or lesson_idx >= len(course.lessons):
         raise HTTPException(status_code=404, detail="Lesson index out of range.")
+    return LessonResponse(lesson=course.lessons[lesson_idx])
+
+
+@router.patch(
+    "/courses/{course_id}/lessons/{lesson_idx}",
+    response_model=LessonResponse,
+)
+async def update_lesson(
+    course_id: str, lesson_idx: int, body: UpdateLessonRequest
+) -> LessonResponse:
+    """Update lesson progress (e.g. mark as completed) and persist to disk."""
+    course = get_course(course_id)
+    if course is None:
+        raise HTTPException(status_code=404, detail="Course not found.")
+    if lesson_idx < 0 or lesson_idx >= len(course.lessons):
+        raise HTTPException(status_code=404, detail="Lesson index out of range.")
+
+    lesson = course.lessons[lesson_idx]
+    if body.is_completed is not None:
+        course.lessons[lesson_idx] = lesson.model_copy(
+            update={"is_completed": body.is_completed}
+        )
+        # Auto-unlock the next lesson
+        if body.is_completed and lesson_idx + 1 < len(course.lessons):
+            next_lesson = course.lessons[lesson_idx + 1]
+            course.lessons[lesson_idx + 1] = next_lesson.model_copy(
+                update={"is_unlocked": True}
+            )
+
+    store_course(course)
     return LessonResponse(lesson=course.lessons[lesson_idx])
 
 

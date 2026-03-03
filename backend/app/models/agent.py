@@ -20,6 +20,7 @@ class AgentState(TypedDict):
 
     messages: Annotated[list[BaseMessage], add_messages]
     course_preferences: CoursePreferences
+    syllabus: dict[str, Any] | None  # from Stage 1
     outline: list[LessonOutline]
     lessons: list[Lesson]
     quizzes: list[Quiz]
@@ -36,6 +37,8 @@ class LessonWriterState(TypedDict):
     outline: LessonOutline
     course_preferences: CoursePreferences
     previous_lesson_titles: list[str]
+    prior_concepts: list[str]       # concepts covered in prior lessons
+    depth_calibration: str          # from syllabus depth_calibration
     draft_content: str
     interactive_elements: list[dict[str, Any]]
     validation_result: dict[str, Any] | None
@@ -62,6 +65,8 @@ class TutorState(TypedDict):
     messages: Annotated[list[BaseMessage], add_messages]
     student_profile: dict[str, Any]
     quiz_scores: list[float]
+    missed_questions: list[dict[str, Any]]   # {question, student_answer, correct_answer, concept}
+    time_per_lesson: dict[str, Any]          # lesson title → seconds spent
     assessment: dict[str, Any] | None
     action_plan: dict[str, Any] | None
     feedback: str

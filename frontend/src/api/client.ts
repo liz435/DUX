@@ -15,7 +15,20 @@ async function request<T>(
   return res.json();
 }
 
+export interface CourseSummary {
+  id: string;
+  title: string;
+  topic: string;
+  level: string;
+  lesson_count: number;
+  completed_count: number;
+  created_at: string;
+}
+
 export const api = {
+  listCourses: () =>
+    request<{ courses: CourseSummary[] }>('/courses'),
+
   createCourse: (preferences: {
     topic: string;
     level: string;
@@ -29,6 +42,12 @@ export const api = {
 
   getCourse: (courseId: string) =>
     request<{ course: Course }>(`/courses/${courseId}`),
+
+  updateLesson: (courseId: string, lessonIdx: number, data: { is_completed?: boolean }) =>
+    request<{ lesson: Lesson }>(`/courses/${courseId}/lessons/${lessonIdx}`, {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
 
   generateLesson: (courseId: string, lessonIdx: number) =>
     request<{ lesson: Lesson }>(`/courses/${courseId}/lessons/${lessonIdx}/generate`, {

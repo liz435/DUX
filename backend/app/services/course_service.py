@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import asyncio
+import json
+import logging
+from pathlib import Path
 from typing import Any
 from datetime import datetime, timezone
 
@@ -21,20 +24,57 @@ from app.models.course import (
     QuizQuestion,
 )
 
+logger = logging.getLogger(__name__)
+
 # ---------------------------------------------------------------------------
-# In-memory course store
+# Persistent course storage (JSON files in a folder)
 # ---------------------------------------------------------------------------
+
+COURSES_DIR = Path(__file__).resolve().parent.parent.parent / "courses"
+COURSES_DIR.mkdir(exist_ok=True)
 
 _courses: dict[str, Course] = {}
 _step_queues: dict[str, asyncio.Queue[AgentStep | None]] = {}
+
+
+def _course_path(course_id: str) -> Path:
+    return COURSES_DIR / f"{course_id}.json"
+
+
+def _save_to_disk(course: Course) -> None:
+    """Persist a course as a JSON file."""
+    try:
+        _course_path(course.id).write_text(course.model_dump_json(indent=2))
+    except Exception:
+        logger.exception("Failed to save course %s to disk", course.id)
+
+
+def _load_from_disk() -> None:
+    """Load all courses from the courses folder into memory."""
+    for path in COURSES_DIR.glob("*.json"):
+        try:
+            course = Course.model_validate_json(path.read_text())
+            _courses[course.id] = course
+            logger.info("Loaded course %s from %s", course.id, path.name)
+        except Exception:
+            logger.exception("Failed to load course from %s", path.name)
+
+
+# Load persisted courses on module import
+_load_from_disk()
 
 
 def get_course(course_id: str) -> Course | None:
     return _courses.get(course_id)
 
 
+def get_all_courses() -> list[Course]:
+    return list(_courses.values())
+
+
 def store_course(course: Course) -> None:
     _courses[course.id] = course
+    _save_to_disk(course)
 
 
 def create_step_queue(course_id: str) -> asyncio.Queue[AgentStep | None]:

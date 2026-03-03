@@ -38,6 +38,12 @@ class GradeQuizRequest(BaseModel):
     )
 
 
+class UpdateLessonRequest(BaseModel):
+    """PATCH /api/courses/{id}/lessons/{idx} — update lesson progress."""
+
+    is_completed: bool | None = None
+
+
 class SubmitFeedbackRequest(BaseModel):
     """POST /api/courses/{id}/feedback — user interaction data."""
 
@@ -56,6 +62,24 @@ class CreateCourseResponse(BaseModel):
 
     course_id: str
     status: str = "generating"
+
+
+class CourseSummary(BaseModel):
+    """Lightweight course summary for listing."""
+
+    id: str
+    title: str
+    topic: str
+    level: str
+    lesson_count: int
+    completed_count: int
+    created_at: str
+
+
+class CourseListResponse(BaseModel):
+    """List of saved courses."""
+
+    courses: list[CourseSummary]
 
 
 class CourseResponse(BaseModel):
@@ -107,3 +131,25 @@ class HealthResponse(BaseModel):
 
     status: str = "ok"
     version: str = "0.1.0"
+
+
+class ApiKeyStatusResponse(BaseModel):
+    """GET /api/health/api-key response."""
+
+    connected: bool
+    provider: str
+    model: str
+    error: str | None = None
+
+
+class ProviderConfigResponse(BaseModel):
+    """GET /api/config/provider response."""
+
+    current_provider: str
+    available_providers: list[str]
+
+
+class SwitchProviderRequest(BaseModel):
+    """POST /api/config/provider request."""
+
+    provider: str

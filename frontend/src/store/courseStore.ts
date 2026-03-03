@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { api } from '../api/client';
 import type { AgentStep, Course } from '../api/client';
 
 interface CourseState {
@@ -36,7 +37,11 @@ export const useCourseStore = create<CourseState>()(
       markLessonComplete: (idx) =>
         set((s) => {
           if (!s.course) return {};
-          const lessons = s.course.lessons.map((l, i) => {
+          // Persist to backend (fire-and-forget)
+          if (s.courseId) {
+            api.updateLesson(s.courseId, idx, { is_completed: true }).catch(() => {});
+          }
+          const lessons = s.course.lessons.map((l) => {
             if (l.index === idx) return { ...l, is_completed: true };
             if (l.index === idx + 1) return { ...l, is_unlocked: true };
             return l;

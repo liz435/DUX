@@ -1,5 +1,4 @@
 import React from "react";
-import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { MultipleChoiceField } from "@/types/dynamic-ui";
 
@@ -9,9 +8,11 @@ interface MultipleChoiceFieldComponentProps {
   onChange: (value: string[]) => void;
 }
 
-export const MultipleChoiceFieldComponent: React.FC<
-  MultipleChoiceFieldComponentProps
-> = ({ field, value = [], onChange }) => {
+export const MultipleChoiceFieldComponent: React.FC<MultipleChoiceFieldComponentProps> = ({
+  field,
+  value = [],
+  onChange,
+}) => {
   const handleToggle = (optionValue: string) => {
     const newValue = value.includes(optionValue)
       ? value.filter((v) => v !== optionValue)
@@ -21,36 +22,45 @@ export const MultipleChoiceFieldComponent: React.FC<
 
   return (
     <div className="space-y-3">
-      <Label>
-        {field.label}
-        {field.required && <span className="text-red-500 ml-1">*</span>}
-      </Label>
-      {field.description && (
-        <p className="text-sm text-muted-foreground">{field.description}</p>
-      )}
-      <div className="space-y-2">
-        {field.options.map((option) => (
-          <div key={option.value} className="flex items-start space-x-2">
-            <Checkbox
-              id={`${field.id}-${option.value}`}
-              checked={value.includes(option.value)}
-              onCheckedChange={() => handleToggle(option.value)}
-            />
-            <div className="grid gap-1.5 leading-none">
-              <label
-                htmlFor={`${field.id}-${option.value}`}
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-              >
-                {option.label}
-              </label>
-              {option.description && (
-                <p className="text-sm text-muted-foreground">
-                  {option.description}
-                </p>
-              )}
-            </div>
-          </div>
-        ))}
+      <div>
+        <label className="text-sm font-semibold text-foreground">
+          {field.label}
+          {field.required && <span className="text-destructive ml-1">*</span>}
+        </label>
+        {field.description && (
+          <p className="text-xs text-muted-foreground mt-0.5">{field.description}</p>
+        )}
+      </div>
+      <div className="grid gap-2">
+        {field.options.map((option) => {
+          const checked = value.includes(option.value);
+          return (
+            <label
+              key={option.value}
+              htmlFor={`${field.id}-${option.value}`}
+              className={`flex items-center gap-3 rounded-xl border-2 px-4 py-3 cursor-pointer transition-all duration-150 ${
+                checked
+                  ? "border-primary bg-primary/5 shadow-sm"
+                  : "border-border hover:border-primary/40 hover:bg-muted/40"
+              }`}
+            >
+              <Checkbox
+                id={`${field.id}-${option.value}`}
+                checked={checked}
+                onCheckedChange={() => handleToggle(option.value)}
+                className="shrink-0"
+              />
+              <div className="flex-1 min-w-0">
+                <span className={`text-sm font-medium ${checked ? "text-primary" : "text-foreground"}`}>
+                  {option.label}
+                </span>
+                {option.description && (
+                  <p className="text-xs text-muted-foreground mt-0.5">{option.description}</p>
+                )}
+              </div>
+            </label>
+          );
+        })}
       </div>
     </div>
   );

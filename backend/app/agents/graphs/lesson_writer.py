@@ -11,12 +11,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langgraph.graph import END, START, StateGraph
 
 from app.agents.llm import get_llm
-from app.agents.prompts.output_schemas import InteractiveElementOutput, ValidationOutput
-from app.agents.prompts.system_prompts import (
-    INTERACTIVE_ELEMENT_SYSTEM,
-    LESSON_WRITER_SYSTEM,
-    VALIDATION_SYSTEM,
-)
+from app.agents.prompts.system_prompts import LESSON_WRITER_SYSTEM
 from app.agents.tools.content_tools import get_content_tools
 from app.models.agent import LessonWriterState
 from app.models.course import Lesson
@@ -60,15 +55,27 @@ def draft_content_node(state: LessonWriterState) -> dict[str, Any]:
     llm = get_llm(purpose="writing")
     interactive_count = 2
 
+    objectives_str = "\n".join(
+        f"  - [{o.get('blooms_level', 'Apply')}] {o.get('objective', '')}"
+        for o in outline.learning_objectives
+    ) or "  - [Apply] Master the key concepts of this lesson"
+
     system_prompt = LESSON_WRITER_SYSTEM.format(
         topic=prefs.topic,
+        index=outline.index,
         title=outline.title,
+        module=outline.module or "Core",
+        learning_objectives=objectives_str,
         key_topics=", ".join(outline.key_topics),
+        key_terms=", ".join(outline.key_terms) if outline.key_terms else "see lesson",
         level=prefs.level,
         learning_style=prefs.learning_style,
         previous_titles=", ".join(previous_titles) if previous_titles else "None (first lesson)",
-        interactive_count=interactive_count,
+        prior_concepts=", ".join(state.get("prior_concepts", [])) or "None",
         estimated_minutes=outline.estimated_minutes,
+        depth_calibration=state.get("depth_calibration") or f"Match vocabulary and depth to {prefs.level} level.",
+        interactive_count=interactive_count,
+        min_examples=2 if prefs.level == "beginner" else 1,
     )
 
     context = "\n".join(

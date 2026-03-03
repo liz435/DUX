@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, CheckCircle } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, Clock } from 'lucide-react';
 import { useEffect } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -25,9 +25,9 @@ export function LessonPage() {
 
   if (!course || !lesson) {
     return (
-      <div className="py-12 text-center">
+      <div className="py-20 text-center">
         <p className="text-muted-foreground">Course or lesson not found.</p>
-        <Link to="/" className="text-primary underline mt-2 inline-block">
+        <Link to="/" className="text-primary underline mt-2 inline-block text-sm">
           Go Home
         </Link>
       </div>
@@ -51,43 +51,54 @@ export function LessonPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8">
-      <div>
-        <p className="text-sm text-muted-foreground mb-1">
-          Lesson {lessonIdx + 1} of {course.lessons.length}
-        </p>
-        <h1 className="text-3xl font-bold">{lesson.title}</h1>
-        <p className="text-muted-foreground mt-1">{lesson.summary}</p>
+    <div className="mx-auto max-w-3xl space-y-8 pb-12">
+      <div className="space-y-2">
+        <div className="flex items-center gap-2 text-xs text-muted-foreground">
+          <span className="font-semibold text-primary">Lesson {lessonIdx + 1}</span>
+          <span>/</span>
+          <span>{course.lessons.length}</span>
+          {lesson.estimated_minutes && (
+            <>
+              <span>·</span>
+              <Clock className="h-3 w-3" />
+              <span>{lesson.estimated_minutes} min</span>
+            </>
+          )}
+        </div>
+        <h1 className="text-2xl font-bold leading-tight">{lesson.title}</h1>
+        {lesson.summary && (
+          <p className="text-muted-foreground text-sm leading-relaxed">{lesson.summary}</p>
+        )}
       </div>
 
-      <article className="prose prose-slate dark:prose-invert max-w-none">
+      <article className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-semibold prose-p:leading-relaxed prose-code:text-primary prose-pre:rounded-xl prose-pre:border">
         <Markdown remarkPlugins={[remarkGfm]}>{lesson.content}</Markdown>
       </article>
 
       {lesson.interactive_elements.map((schema, i) => (
-        <div key={i} className="border rounded-lg p-4">
-          <DynamicUI
-            schema={schema as unknown as DynamicFormSchema}
-            onSubmit={() => {}}
-            submitLabel="Check"
-          />
-        </div>
+        <DynamicUI
+          key={i}
+          schema={schema as unknown as DynamicFormSchema}
+          onSubmit={() => {}}
+          submitLabel="Check Answer"
+        />
       ))}
 
-      <div className="flex items-center justify-between border-t pt-6">
+      <div className="flex items-center justify-between pt-4 border-t">
         <div>
           {prevIdx !== null && (
             <Link
               to={`/courses/${id}/lessons/${prevIdx}`}
-              className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+              className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              <ArrowLeft className="h-4 w-4" /> Previous
+              <ArrowLeft className="h-4 w-4" />
+              Previous
             </Link>
           )}
         </div>
         <button
           onClick={handleComplete}
-          className="flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90 transition-colors"
+          className="flex items-center gap-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm"
         >
           {lesson.is_completed ? (
             <>
@@ -96,7 +107,8 @@ export function LessonPage() {
             </>
           ) : (
             <>
-              Mark Complete & {hasQuiz ? 'Take Quiz' : nextIdx !== null ? 'Next' : 'Finish'}
+              Mark Complete{hasQuiz ? ' & Take Quiz' : nextIdx !== null ? ' & Next' : ' & Finish'}
+              <ArrowRight className="h-4 w-4" />
             </>
           )}
         </button>
@@ -104,9 +116,10 @@ export function LessonPage() {
           {nextIdx !== null && !hasQuiz && (
             <Link
               to={`/courses/${id}/lessons/${nextIdx}`}
-              className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+              className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
             >
-              Next <ArrowRight className="h-4 w-4" />
+              Next
+              <ArrowRight className="h-4 w-4" />
             </Link>
           )}
         </div>

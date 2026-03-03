@@ -1,5 +1,4 @@
 import React from "react";
-import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import type { SliderField } from "@/types/dynamic-ui";
 
@@ -14,20 +13,19 @@ export const SliderFieldComponent: React.FC<SliderFieldComponentProps> = ({
   value,
   onChange,
 }) => {
-  // Ensure we always have a valid number value
   const currentValue = value ?? field.defaultValue ?? field.min;
-  
+
   return (
     <div className="space-y-4">
       <div className="flex justify-between items-center">
-        <Label htmlFor={field.id}>
+        <label htmlFor={field.id} className="text-sm font-semibold text-foreground">
           {field.label}
-          {field.required && <span className="text-red-500 ml-1">*</span>}
-        </Label>
-        <span className="text-sm font-medium">{currentValue}</span>
+          {field.required && <span className="text-destructive ml-1">*</span>}
+        </label>
+        <span className="text-sm font-semibold text-primary tabular-nums">{currentValue}</span>
       </div>
       {field.description && (
-        <p className="text-sm text-muted-foreground">{field.description}</p>
+        <p className="text-xs text-muted-foreground">{field.description}</p>
       )}
       <Slider
         id={field.id}

@@ -1,0 +1,358 @@
+{
+  "id": "e2a280fe-56c5-44a3-b561-107c3044be7b",
+  "title": "Course: creative writing",
+  "description": "A quick beginner course on creative writing.",
+  "topic": "creative writing",
+  "level": "beginner",
+  "lessons": [
+    {
+      "index": 0,
+      "title": "Introduction to Creative Writing",
+      "summary": "This lesson introduces learners to creative writing, covering its definition, core elements, and various forms such as poetry, fiction, and non-fiction. It also explores the purpose and benefits of creative writing in different contexts.",
+      "key_topics": [
+        "Definition of Creative Writing",
+        "Forms of Creative Writing",
+        "Purpose of Creative Writing",
+        "Core Elements of Creative Writing"
+      ],
+      "has_quiz": true,
+      "estimated_minutes": 60,
+      "module": "",
+      "prerequisites": [],
+      "learning_objectives": [],
+      "key_terms": [],
+      "difficulty": 0.5,
+      "content": "## Introduction to Creative Writing\n\n### What You'll Learn\n- Understand what **creative writing** is and identify its core elements.\n- Recognize various forms of creative writing, including **poetry**, **fiction**, and **non-fiction**.\n- Explore the purpose and benefits of engaging in creative writing in both personal and professional settings.\n\n### Definition of Creative Writing\n\n#### What is Creative Writing?\n\n**Creative writing** is a form of writing that transcends the conventional boundaries of professional, journalistic, academic, or technical forms of literature. It primarily emphasizes narrative craft, character development, and the use of literary tropes.\n\n#### Why It Matters\n\nCreative writing allows for the expression of thoughts, feelings, and emotions in a way that can engage and captivate an audience. It provides a platform for storytelling and the exploration of the human condition, offering insights into diverse perspectives.\n\n#### How It Works\n\nIn creative writing, the focus is on originality, creativity, and the unique voice of the writer. Unlike technical writing, which often follows strict guidelines and formats, creative writing prioritizes the art of storytelling and the aesthetic of the prose.\n\n#### When to Use It\n\nCreative writing is used when the goal is to entertain, inspire, or provoke thought. It is the chosen form when the writer wants to explore themes, create vivid imagery, or develop complex characters.\n\n#### Example Scenario\n\nConsider a short story that explores the theme of lost love. The writer may use rich, descriptive language to evoke emotions and paint a vivid picture of the setting and characters, drawing readers into the narrative.\n\n### Forms of Creative Writing\n\n#### Poetry\n\n**Poetry** is a form of creative writing that uses aesthetic and rhythmic qualities of language to evoke meanings and emotions. It often employs devices like meter, rhyme, and metaphor to convey deeper meanings.\n\n##### Example\nA haiku about nature might read:\n\"Whispering breezes,\nDance across the lush green field,\nNature's gentle song.\"\n\n#### Fiction\n\n**Fiction** refers to any narrative work that is created from the imagination, not presented as fact. It includes novels, short stories, and novellas.\n\n##### Example\nA fictional short story might follow a young protagonist on a journey of self-discovery, using dialogue and plot to develop character and theme.\n\n#### Non-fiction\n\n**Non-fiction** is based on factual information but can incorporate storytelling techniques to engage readers. This includes memoirs, biographies, and essays.\n\n##### Example\nA personal essay could explore a writer's childhood memories, using vivid descriptions and reflective insights to connect with readers.\n\n### Purpose of Creative Writing\n\n#### Personal Benefits\n\nCreative writing can serve as a therapeutic outlet for personal expression. It allows individuals to explore their thoughts and emotions, offering relief and personal growth.\n\n#### Professional Benefits\n\nIn a professional context, creative writing skills can enhance communication abilities, foster innovative thinking, and improve problem-solving skills. It is especially valuable in fields like marketing, advertising, and content creation.\n\n### Core Elements of Creative Writing\n\n#### Elements\n\n- **Character**: The individuals who populate your story. They should be well-developed and relatable.\n- **Plot**: The sequence of events that make up your story. It should be coherent and engaging.\n- **Setting**: The time and place where the story occurs, helping to create the atmosphere.\n- **Theme**: The underlying message or insight that the story conveys.\n- **Style**: The unique way a writer expresses themselves, which includes word choice, sentence structure, and tone.\n\n#### Example: Creating a Short Story\n\nTo create a compelling short story, start with an interesting **character** facing a conflict. Develop a **plot** that allows the character to confront this conflict, set in a vivid **setting** that enhances the narrative. Ensure the story communicates a meaningful **theme**, and employ a **style** that reflects your unique voice.\n\n[Interactive Check 1]\n\n### Key Takeaways\n\n- Creative writing is about expressing ideas and emotions in imaginative and narrative-driven ways.\n- It includes various forms such as poetry, fiction, and non-fiction, each with unique characteristics.\n- Creative writing serves both personal and professional purposes, enhancing emotional expression and communication skills.\n- Core elements of creative writing include character, plot, setting, theme, and style, all of which contribute to the depth and engagement of the story.\n\n### What's Next\n\nIn the next lesson, we will delve deeper into the process of developing characters for your creative writing projects. We'll explore techniques for creating compelling and realistic characters that resonate with your readers. Stay tuned!",
+      "interactive_elements": [
+        {
+          "title": "Quick Check",
+          "description": "Test your understanding of the concept above.",
+          "fields": [
+            {
+              "id": "check_q1",
+              "type": "single-choice",
+              "label": "Which statement best describes this concept?",
+              "required": true,
+              "options": [
+                {
+                  "value": "a",
+                  "label": "Option A — correct understanding"
+                },
+                {
+                  "value": "b",
+                  "label": "Option B — common misconception"
+                },
+                {
+                  "value": "c",
+                  "label": "Option C — unrelated concept"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "is_completed": true,
+      "is_unlocked": true
+    },
+    {
+      "index": 1,
+      "title": "Elements and Techniques of Creative Writing",
+      "summary": "This lesson dives deeper into the essential elements and techniques of creative writing, including plot, character, setting, and theme. It also covers writing techniques such as show vs tell and narrative perspectives.",
+      "key_topics": [
+        "Plot and Structure",
+        "Character Development",
+        "Setting and Context",
+        "Show vs Tell",
+        "Narrative Perspectives"
+      ],
+      "has_quiz": true,
+      "estimated_minutes": 60,
+      "module": "",
+      "prerequisites": [],
+      "learning_objectives": [],
+      "key_terms": [],
+      "difficulty": 0.5,
+      "content": "## Elements and Techniques of Creative Writing\n\nWelcome to your first lesson on the essential elements and techniques of creative writing. This lesson will help you analyze and apply the fundamental components of creative storytelling to enhance your writing skills.\n\n### What You'll Learn\n\n- **Understand and analyze** the essential elements of creative writing such as plot, character, setting, and theme.\n- **Apply** basic writing techniques like \"show vs tell\" and descriptive writing in your creative pieces.\n- **Distinguish** between different narrative perspectives and understand their impacts on storytelling.\n\n## Plot and Structure\n\n### What is Plot?\n\n**Plot** is the sequence of events that make up a story. It encompasses the introduction, rising action, climax, falling action, and resolution. Think of it as the roadmap that guides your story from start to finish.\n\n#### Why Plot Matters\n\nA well-constructed plot provides structure to your story and keeps readers engaged. It ensures that events unfold logically and meaningfully, maintaining the reader's interest and emotional investment.\n\n#### How Plot Works\n\nIn crafting a plot, writers create an arc that typically follows a pattern:\n\n1. **Introduction**: Introduces characters, setting, and the main conflict.\n2. **Rising Action**: Builds tension through complications and challenges.\n3. **Climax**: The story's turning point, where the main conflict reaches its peak.\n4. **Falling Action**: Events that unfold post-climax, leading towards resolution.\n5. **Resolution**: The conclusion, where conflicts are resolved, and the story concludes.\n\n#### When to Use Plot vs. Alternatives\n\nWhile most stories require a plot, some experimental or literary works might prioritize character exploration or thematic depth over strict plotting. Choose based on your story's goals.\n\n#### Example: Simple Plot Structure\n\nConsider a short story about a young detective solving a mystery:\n\n- **Introduction**: The detective is introduced and learns about a missing person case.\n- **Rising Action**: Clues are discovered, suspects are questioned.\n- **Climax**: The detective confronts the main suspect, unveiling the truth.\n- **Falling Action**: The mystery is solved, and the missing person is found.\n- **Resolution**: The detective reflects on the case, gaining personal insight.\n\n### Character Development\n\n#### What is Character Development?\n\n**Character development** refers to the process of creating a detailed and believable character. This involves defining their traits, motivations, and evolution throughout the story.\n\n#### Why Character Development Matters\n\nStrong character development allows readers to connect emotionally with your story. Well-rounded characters are relatable and memorable, driving the narrative forward.\n\n#### How Character Development Works\n\nTo develop a character:\n\n- **Define Traits**: Determine physical, emotional, and psychological attributes.\n- **Motivation**: Understand what drives the character's actions and decisions.\n- **Arc**: Ensure the character experiences growth or change as the story progresses.\n\n#### Example: Building a Character\n\nImagine a character named Alex, a shy high school student:\n\n- **Traits**: Introverted, intelligent, wears glasses.\n- **Motivation**: Desires acceptance and friendship.\n- **Arc**: Starts as shy and reserved, gradually becomes more confident and expressive.\n\n[Interactive Check 1]\n\n### Setting and Context\n\n#### What is Setting?\n\n**Setting** is the time and place where a story unfolds. It includes the geographical location, historical period, and cultural backdrop.\n\n#### Why Setting Matters\n\nThe setting provides context, enriching the narrative and influencing characters' actions and plot development. It can also serve as a symbol or mood enhancer.\n\n#### How Setting Works\n\nTo establish a setting:\n\n- **Detail**: Describe the environment vividly to immerse readers.\n- **Consistency**: Maintain setting details to avoid disorienting the reader.\n- **Integration**: Use setting to enhance themes and character challenges.\n\n#### Example: Descriptive Setting\n\nConsider a fantasy novel set in a mystical forest:\n\n- **Time**: Ancient, forgotten era.\n- **Place**: Enchanted forest with towering trees and magical creatures.\n- **Context**: A world where magic governs life, and ancient secrets lie hidden.\n\n### Show vs Tell\n\n#### What is Show vs Tell?\n\n\"**Show vs Tell**\" is a technique in which writers show actions and emotions through vivid descriptions rather than explicitly telling the reader.\n\n#### Why Show vs Tell Matters\n\nShowing creates an immersive experience, allowing readers to deduce emotions and actions, fostering deeper engagement and emotional impact.\n\n#### How Show vs Tell Works\n\n- **Show**: \"John's hands trembled as he reached for the doorknob, his heart pounding in his chest.\"\n- **Tell**: \"John was nervous.\"\n\n#### When to Use\n\nUse \"show\" for pivotal scenes to enhance emotional depth. Use \"tell\" for summarizing less critical information to maintain narrative pace.\n\n### Narrative Perspectives\n\n#### What is Narrative Perspective?\n\n**Narrative perspective** is the point of view from which a story is told. Common perspectives include first-person, third-person limited, and third-person omniscient.\n\n#### Why Narrative Perspective Matters\n\nThe perspective shapes the reader's connection to the characters and the level of insight into their thoughts and emotions.\n\n#### How Narrative Perspective Works\n\n- **First-Person**: \"I walked into the room.\" Offers intimacy but limits perspective to one character.\n- **Third-Person Limited**: \"She walked into the room.\" Offers a broader view while focusing on one character's thoughts.\n- **Third-Person Omniscient**: \"They walked into the room.\" Offers insight into multiple characters' thoughts.\n\n#### When to Use\n\nChoose based on the story's needs. First-person for personal, introspective stories; third-person for wider scope and flexibility.\n\n[Interactive Check 2]\n\n## Key Takeaways\n\n- **Plot** is the backbone of a story, guiding the reader through the narrative arc.\n- **Character Development** is crucial for creating relatable and engaging characters.\n- **Setting** provides context and can enhance thematic elements.\n- **Show vs Tell** enriches the narrative, allowing readers to infer emotions and actions.\n- **Narrative Perspective** shapes the reader's experience and understanding of the story.\n\n## What's Next?\n\nIn the next lesson, we will delve deeper into advanced character development techniques and explore how to create complex, multi-dimensional characters that captivate your readers.",
+      "interactive_elements": [
+        {
+          "title": "Quick Check",
+          "description": "Test your understanding of the concept above.",
+          "fields": [
+            {
+              "id": "check_q1",
+              "type": "single-choice",
+              "label": "Which statement best describes this concept?",
+              "required": true,
+              "options": [
+                {
+                  "value": "a",
+                  "label": "Option A — correct understanding"
+                },
+                {
+                  "value": "b",
+                  "label": "Option B — common misconception"
+                },
+                {
+                  "value": "c",
+                  "label": "Option C — unrelated concept"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Reflect",
+          "description": "Take a moment to think about what you've learned.",
+          "fields": [
+            {
+              "id": "reflection_q1",
+              "type": "text",
+              "label": "In your own words, explain this concept:",
+              "placeholder": "Type your explanation here..."
+            }
+          ]
+        }
+      ],
+      "is_completed": false,
+      "is_unlocked": true
+    },
+    {
+      "index": 2,
+      "title": "Practical Application of Creative Writing",
+      "summary": "This lesson focuses on the practical application of creative writing skills. Learners will create a short piece, critique samples to identify effective techniques, and revise drafts for improvement.",
+      "key_topics": [
+        "Writing a Short Piece",
+        "Critiquing Writing Samples",
+        "Revising and Editing",
+        "Incorporating Feedback"
+      ],
+      "has_quiz": false,
+      "estimated_minutes": 60,
+      "module": "",
+      "prerequisites": [],
+      "learning_objectives": [],
+      "key_terms": [],
+      "difficulty": 0.5,
+      "content": "## Lesson 2: Practical Application of Creative Writing\n\n### What you'll learn\n\n- How to create a short creative writing piece using elements and techniques from the previous lesson.\n- How to critique creative writing samples effectively to identify and analyze the use of these elements.\n- How to revise a draft to improve clarity and creativity based on feedback.\n- Understand key terms such as **draft**, **critique**, **revision**, and **feedback**.\n\n## Writing a Short Piece\n\n### Definition and Importance\n\nA **draft** is a preliminary version of a piece of writing. It's the foundation where ideas take shape and can be modified and improved. Drafting is crucial in creative writing because it allows writers to explore their ideas without the pressure of perfection.\n\n### How to Write a Short Piece\n\nWhen writing a short creative piece, start by brainstorming ideas. Consider the themes, settings, characters, and conflicts you want to explore. For beginners, focusing on a single scene or moment can help maintain clarity and depth.\n\n#### Example Scenario\n\nImagine a bustling city street as your setting. Your character might be a young artist struggling to find inspiration. The conflict could arise from an unexpected encounter with a street performer.\n\n### Process\n\n1. **Brainstorm:** Jot down ideas, themes, and potential plot points.\n2. **Outline:** Organize your thoughts into a loose structure.\n3. **Write:** Draft your scene, focusing on vivid descriptions and emotional depth.\n4. **Reflect:** Step back and read your piece to see if it aligns with your initial vision.\n\nA common mistake is trying to perfect each sentence before moving on. Remember, the draft is about getting ideas down, not about perfection.\n\n[Interactive Check 1]\n\n## Critiquing Writing Samples\n\n### Definition and Importance\n\nA **critique** involves evaluating a piece of writing to understand its strengths and weaknesses. Critiquing is an essential skill in creative writing as it helps writers improve their work and learn from others.\n\n### How to Critique\n\n1. **Read Thoroughly:** Understand the writer’s intent and the piece’s context.\n2. **Identify Elements:** Look for the use of creative writing elements such as theme, character development, and setting.\n3. **Analyze Techniques:** Observe techniques like imagery, dialogue, and pacing.\n4. **Provide Constructive Feedback:** Offer suggestions that are specific and actionable.\n\n### Example Analysis\n\nConsider a story where a character faces a moral dilemma. Critique by examining how the conflict is presented and resolved. Is the character’s decision believable? Does the setting enhance the tension?\n\nA common misconception is that critiquing is about finding faults. In reality, it's about offering insights to help the writer see their work from a new perspective.\n\n## Revising and Editing\n\n### Definition and Importance\n\n**Revision** involves making substantial changes to a draft to improve its content and structure. **Editing** focuses more on correcting grammar, punctuation, and style. Both steps are essential to refine creative writing.\n\n### How to Revise and Edit\n\n1. **Reassess Content:** Check if the story flows logically and if the characters are well-developed.\n2. **Enhance Clarity:** Simplify complex sentences and clarify vague ideas.\n3. **Improve Creativity:** Add vivid details and enrich dialogues.\n4. **Edit for Precision:** Correct grammar errors and polish your style.\n\n### Example Revision\n\nLet's revisit our city street scene. Initially, you might describe the street with basic adjectives. In revision, you could enrich this with sensory details: \"The air buzzed with the aroma of freshly roasted coffee and the chatter of passersby.\"\n\n[Interactive Check 2]\n\n## Incorporating Feedback\n\n### Definition and Importance\n\n**Feedback** is information provided on a piece of writing that highlights its strengths and areas for improvement. Incorporating feedback is vital for growth as a writer.\n\n### How to Incorporate Feedback\n\n1. **Listen Actively:** Be open to suggestions and resist the urge to defend your work.\n2. **Compare Perspectives:** Consider different viewpoints to gain a broader understanding.\n3. **Prioritize Changes:** Focus on feedback that aligns with your vision for the piece.\n4. **Iterate:** Revise your draft multiple times to see the cumulative effect of the feedback.\n\n### Example Application\n\nIf feedback suggests that a character's actions seem inconsistent, review their motivations and adjust scenes to align with their personality.\n\n## Key Takeaways\n\n- Drafting is the foundational step of writing where ideas are explored freely.\n- Critiquing involves evaluating writing to improve it and learn from others.\n- Revision and editing are crucial for refining content and ensuring clarity.\n- Feedback provides valuable insights and helps writers enhance their work.\n\n## What's Next\n\nIn the next lesson, we will delve into \"Developing Unique Writing Styles,\" where you'll learn how to cultivate a distinct voice and style in your writing.",
+      "interactive_elements": [
+        {
+          "title": "Quick Check",
+          "description": "Test your understanding of the concept above.",
+          "fields": [
+            {
+              "id": "check_q1",
+              "type": "single-choice",
+              "label": "Which statement best describes this concept?",
+              "required": true,
+              "options": [
+                {
+                  "value": "a",
+                  "label": "Option A — correct understanding"
+                },
+                {
+                  "value": "b",
+                  "label": "Option B — common misconception"
+                },
+                {
+                  "value": "c",
+                  "label": "Option C — unrelated concept"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Reflect",
+          "description": "Take a moment to think about what you've learned.",
+          "fields": [
+            {
+              "id": "reflection_q1",
+              "type": "text",
+              "label": "In your own words, explain this concept:",
+              "placeholder": "Type your explanation here..."
+            }
+          ]
+        }
+      ],
+      "is_completed": false,
+      "is_unlocked": false
+    }
+  ],
+  "quizzes": [
+    {
+      "lesson_index": 0,
+      "questions": [
+        {
+          "id": "q2",
+          "question": "True or False: Poetry is a form of creative writing.",
+          "question_type": "true-false",
+          "options": null,
+          "correct_answer": "True",
+          "explanation": "Poetry is one of the recognized forms of creative writing, which also includes fiction and non-fiction."
+        },
+        {
+          "id": "q3",
+          "question": "Name one core element of creative writing.",
+          "question_type": "short-answer",
+          "options": null,
+          "correct_answer": "Character development",
+          "explanation": "Core elements of creative writing include character development, plot, setting, and theme. These elements are essential in crafting a compelling narrative."
+        },
+        {
+          "id": "q5",
+          "question": "Describe how creative writing can benefit individuals in a non-literary context.",
+          "question_type": "short-answer",
+          "options": null,
+          "correct_answer": "Creative writing can enhance problem-solving skills and foster emotional expression.",
+          "explanation": "Creative writing benefits individuals by enhancing creativity, communication, empathy, and emotional expression, which are useful in various non-literary contexts."
+        },
+        {
+          "id": "q6",
+          "question": "True or False: The primary goal of creative writing is to adhere to strict grammatical rules.",
+          "question_type": "true-false",
+          "options": null,
+          "correct_answer": "False",
+          "explanation": "While grammar is important, the primary goal of creative writing is to express ideas creatively, which may sometimes require bending grammatical rules for artistic effect."
+        },
+        {
+          "id": "q1",
+          "question": "What is the primary purpose of creative writing?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "a",
+              "label": "To communicate factual information"
+            },
+            {
+              "value": "b",
+              "label": "To express ideas creatively and imaginatively"
+            },
+            {
+              "value": "c",
+              "label": "To follow strict writing guidelines"
+            },
+            {
+              "value": "d",
+              "label": "To summarize news events"
+            }
+          ],
+          "correct_answer": "b",
+          "explanation": "Creative writing is primarily about expressing ideas in a creative and imaginative way, as opposed to just communicating facts or summarizing news events."
+        },
+        {
+          "id": "q4",
+          "question": "Which of the following is NOT a form of creative writing?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "a",
+              "label": "Fiction"
+            },
+            {
+              "value": "b",
+              "label": "Poetry"
+            },
+            {
+              "value": "c",
+              "label": "Technical manuals"
+            },
+            {
+              "value": "d",
+              "label": "Creative non-fiction"
+            }
+          ],
+          "correct_answer": "c",
+          "explanation": "Technical manuals are not considered creative writing because they focus on providing factual information rather than expressing ideas creatively."
+        }
+      ]
+    },
+    {
+      "lesson_index": 1,
+      "questions": [
+        {
+          "id": "q2",
+          "question": "True or False: Character development is only about describing a character's physical appearance.",
+          "question_type": "true-false",
+          "options": null,
+          "correct_answer": "False",
+          "explanation": "Character development involves more than just physical description; it encompasses personality, motivations, growth, and relationships within the story."
+        },
+        {
+          "id": "q5",
+          "question": "Describe a scenario where 'showing' would be more effective than 'telling'.",
+          "question_type": "short-answer",
+          "options": null,
+          "correct_answer": "Describing a character's fear through their trembling hands and quick breathing instead of simply stating 'she was scared.'",
+          "explanation": "'Showing' uses vivid details to engage readers and evoke emotions, which is often more immersive than directly stating facts."
+        },
+        {
+          "id": "q1",
+          "question": "What is the primary function of a plot in a story?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "a",
+              "label": "To create suspense and surprise"
+            },
+            {
+              "value": "b",
+              "label": "To guide the story's events and structure"
+            },
+            {
+              "value": "c",
+              "label": "To develop characters' personalities"
+            },
+            {
+              "value": "d",
+              "label": "To establish the story's setting"
+            }
+          ],
+          "correct_answer": "b",
+          "explanation": "The plot is the backbone of a story, guiding its events and structure. While suspense and character development are important, they are not the primary roles of the plot."
+        },
+        {
+          "id": "q3",
+          "question": "Explain the difference between 'show' and 'tell' in creative writing.",
+          "question_type": "short-answer",
+          "options": null,
+          "correct_answer": "'Show' involves describing actions, senses, and emotions to let the reader experience the story, whereas 'tell' involves directly stating information or events.",
+          "explanation": "'Show' engages readers by allowing them to infer and feel through detailed descriptions, while 'tell' provides direct information which can be less engaging."
+        },
+        {
+          "id": "q6",
+          "question": "Analyze why setting is integral to character development in a story.",
+          "question_type": "short-answer",
+          "options": null,
+          "correct_answer": "Setting provides context and influences characters' behaviors, decisions, and growth. It shapes their backgrounds and can affect their motivations and challenges.",
+          "explanation": "The setting helps define the circumstances and challenges characters face, which can drive their development and the plot."
+        },
+        {
+          "id": "q4",
+          "question": "Which narrative perspective involves the narrator knowing all thoughts and feelings of every character?",
+          "question_type": "multiple-choice",
+          "options": [
+            {
+              "value": "a",
+              "label": "First-person"
+            },
+            {
+              "value": "b",
+              "label": "Second-person"
+            },
+            {
+              "value": "c",
+              "label": "Third-person limited"
+            },
+            {
+              "value": "d",
+              "label": "Third-person omniscient"
+            }
+          ],
+          "correct_answer": "d",
+          "explanation": "The third-person omniscient perspective allows the narrator to know everything about all characters. First-person and third-person limited provide more restricted views."
+        }
+      ]
+    }
+  ],
+  "created_at": "2026-03-03T00:08:34.051533Z"
+}

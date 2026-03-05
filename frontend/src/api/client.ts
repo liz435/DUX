@@ -4,9 +4,10 @@ async function request<T>(
   path: string,
   options?: RequestInit,
 ): Promise<T> {
+  const { headers: optHeaders, ...restOptions } = options ?? {};
   const res = await fetch(`${API_BASE}${path}`, {
-    headers: { 'Content-Type': 'application/json', ...options?.headers },
-    ...options,
+    ...restOptions,
+    headers: { 'Content-Type': 'application/json', ...optHeaders },
   });
   if (!res.ok) {
     const detail = await res.text().catch(() => res.statusText);
@@ -92,7 +93,7 @@ export const api = {
       `/courses/${courseId}/lessons/${lessonIdx}/check/${elementIdx}`,
       {
         method: 'POST',
-        body: JSON.stringify({ lesson_index: lessonIdx, element_index: elementIdx, answers }),
+        body: JSON.stringify({ answers }),
       },
     ),
 };
@@ -182,7 +183,7 @@ export interface Lesson {
 export interface QuizQuestion {
   id: string;
   question: string;
-  question_type: 'multiple-choice' | 'true-false' | 'short-answer';
+  question_type: 'multiple-choice' | 'true-false' | 'short-answer' | 'code-completion';
   options?: { value: string; label: string }[];
   correct_answer: string;
   explanation: string;

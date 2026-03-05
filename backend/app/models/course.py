@@ -50,7 +50,7 @@ class QuizQuestion(BaseModel):
 
     id: str
     question: str = Field(min_length=1)
-    question_type: Literal["multiple-choice", "true-false", "short-answer"]
+    question_type: Literal["multiple-choice", "true-false", "short-answer", "code-completion"]
     options: list[QuizOption] | None = None
     correct_answer: str = Field(min_length=1)
     explanation: str = Field(min_length=1)

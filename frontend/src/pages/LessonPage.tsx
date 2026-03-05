@@ -18,6 +18,7 @@ export function LessonPage() {
   const setCourseId = useCourseStore((s) => s.setCourseId);
   const markLessonComplete = useCourseStore((s) => s.markLessonComplete);
   const [loading, setLoading] = useState(false);
+  const [generateFailed, setGenerateFailed] = useState<number | null>(null);
 
   const lessonIdx = parseInt(idx ?? '0', 10);
   const lesson = course?.lessons.find((l) => l.index === lessonIdx);
@@ -36,9 +37,14 @@ export function LessonPage() {
     }
   }, [id, course, courseId, setCourse, setCourseId]);
 
+  // Reset generate failure state when navigating to a different lesson
+  useEffect(() => {
+    setGenerateFailed(null);
+  }, [lessonIdx]);
+
   // Generate lesson content on demand if missing, and update store with result
   useEffect(() => {
-    if (id && course && courseId === id && !course.lessons.find(l => l.index === lessonIdx)?.content) {
+    if (id && course && courseId === id && generateFailed !== lessonIdx && !course.lessons.find(l => l.index === lessonIdx)?.content) {
       api.generateLesson(id, lessonIdx)
         .then(({ lesson: generated }) => {
           const updatedLessons = course.lessons.map((l) =>
@@ -46,9 +52,11 @@ export function LessonPage() {
           );
           setCourse({ ...course, lessons: updatedLessons });
         })
-        .catch(() => {});
+        .catch(() => {
+          setGenerateFailed(lessonIdx);
+        });
     }
-  }, [id, lessonIdx, course, courseId, setCourse]);
+  }, [id, lessonIdx, course, courseId, setCourse, generateFailed]);
 
   if (loading) {
     return (
@@ -219,7 +227,7 @@ export function LessonPage() {
           {lesson.interactive_elements.map((schema, i) => (
             <InteractiveCheck
               key={i}
-              schema={schema as DynamicFormSchema}
+              schema={schema as unknown as DynamicFormSchema}
               courseId={id!}
               lessonIdx={lessonIdx}
               elementIdx={i}

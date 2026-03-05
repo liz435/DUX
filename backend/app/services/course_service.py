@@ -123,7 +123,18 @@ _quiz_gen = build_quiz_generator_graph().compile()
 _tutor = build_tutor_graph().compile()
 
 # Store preferences between Phase 1 (outline) and Phase 2 (content generation)
-_draft_preferences: dict[str, CoursePreferences] = {}
+# Entries are (preferences, timestamp) — stale entries are cleaned up periodically.
+_draft_preferences: dict[str, tuple[CoursePreferences, float]] = {}
+_DRAFT_TTL_SECONDS = 3600  # 1 hour
+
+
+def _cleanup_stale_drafts() -> None:
+    """Remove draft preferences older than TTL."""
+    import time
+    now = time.time()
+    stale = [k for k, (_, ts) in _draft_preferences.items() if now - ts > _DRAFT_TTL_SECONDS]
+    for k in stale:
+        _draft_preferences.pop(k, None)
 
 
 async def run_outline_generation(
@@ -177,7 +188,9 @@ async def run_outline_generation(
         store_course(course)
 
         # Store preferences for Phase 2
-        _draft_preferences[course_id] = preferences
+        import time
+        _cleanup_stale_drafts()
+        _draft_preferences[course_id] = (preferences, time.time())
 
         await queue.put(
             AgentStep(
@@ -210,7 +223,8 @@ async def run_content_generation(
             await queue.put(AgentStep(type="error", message="Draft course not found."))
             return
 
-        preferences = _draft_preferences.pop(course_id, None)
+        draft_entry = _draft_preferences.pop(course_id, None)
+        preferences = draft_entry[0] if draft_entry else None
         if preferences is None:
             # Reconstruct from course data as fallback
             preferences = CoursePreferences(
@@ -315,6 +329,8 @@ async def generate_lesson_on_demand(
             "outline": outline,
             "course_preferences": preferences,
             "previous_lesson_titles": previous_titles or [],
+            "prior_concepts": [],
+            "depth_calibration": f"Match vocabulary and depth to {preferences.level} level.",
             "draft_content": "",
             "interactive_elements": [],
             "validation_result": None,

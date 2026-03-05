@@ -79,7 +79,7 @@ export const DynamicUI: React.FC<DynamicUIProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const missing = fields
-      .filter((field) => field.required && !values[field.id])
+      .filter((field) => field.required && (values[field.id] === undefined || values[field.id] === null || values[field.id] === ''))
       .map((field) => field.label);
     if (missing.length > 0) {
       setErrors(missing);

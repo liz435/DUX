@@ -66,8 +66,6 @@ class SubmitFeedbackRequest(BaseModel):
 class CheckInteractiveRequest(BaseModel):
     """POST /api/courses/{id}/lessons/{idx}/check/{element_idx} — check answer."""
 
-    lesson_index: int
-    element_index: int
     answers: dict[str, Any] = Field(
         ..., description="Map of field_id -> user answer"
     )

@@ -29,6 +29,7 @@ from app.models.api import (
 )
 from app.services.course_service import (
     create_step_queue,
+    generate_lesson_on_demand,
     get_all_courses,
     get_course,
     get_step_queue,
@@ -36,6 +37,7 @@ from app.services.course_service import (
     remove_step_queue,
     run_content_generation,
     run_outline_generation,
+    run_tutor_check,
     store_course,
     update_lesson_outline,
 )
@@ -132,13 +134,37 @@ async def get_course_detail(course_id: str) -> CourseResponse:
     response_model=LessonResponse,
 )
 async def generate_lesson(course_id: str, lesson_idx: int) -> LessonResponse:
-    """On-demand lesson generation (placeholder — will use LangGraph in Phase 3)."""
+    """On-demand lesson generation — invokes the lesson writer graph if content is missing."""
     course = get_course(course_id)
     if course is None:
         raise HTTPException(status_code=404, detail="Course not found.")
     if lesson_idx < 0 or lesson_idx >= len(course.lessons):
         raise HTTPException(status_code=404, detail="Lesson index out of range.")
-    return LessonResponse(lesson=course.lessons[lesson_idx])
+
+    existing = course.lessons[lesson_idx]
+    if existing.content:
+        return LessonResponse(lesson=existing)
+
+    # Generate content using the lesson writer graph
+    from app.models.course import CoursePreferences
+
+    preferences = CoursePreferences(
+        topic=course.topic,
+        level=course.level,
+        course_length=(
+            "quick" if len(course.lessons) <= 3
+            else "deep-dive" if len(course.lessons) >= 10
+            else "standard"
+        ),
+        learning_style="mixed",
+    )
+    previous_titles = [l.title for l in course.lessons if l.index < lesson_idx]
+    lesson = await generate_lesson_on_demand(existing, preferences, previous_titles)
+
+    # Update and persist
+    course.lessons[lesson_idx] = lesson
+    store_course(course)
+    return LessonResponse(lesson=lesson)
 
 
 @router.patch(
@@ -364,35 +390,21 @@ async def submit_feedback(
         raise HTTPException(status_code=404, detail="Course not found.")
 
     try:
-        from app.agents.graphs.tutor import build_tutor_graph
-
         # Build student profile from course data
         completed_lessons = sum(1 for l in course.lessons if l.is_completed)
         quiz_scores: list[float] = []
         for quiz in course.quizzes:
-            # Calculate score from quiz (if graded data is available)
             quiz_scores.append(0.5)  # Default if no grade data stored
 
-        tutor_state: dict[str, Any] = {
-            "messages": [],
-            "student_profile": {
-                "level": course.level,
-                "topic": course.topic,
-                "completed_lessons": completed_lessons,
-                "total_lessons": len(course.lessons),
-                "topic_scores": {},
-            },
-            "quiz_scores": quiz_scores,
-            "missed_questions": [],
-            "time_per_lesson": {},
-            "assessment": None,
-            "action_plan": None,
-            "feedback": "",
-            "adaptations": {},
+        student_profile = {
+            "level": course.level,
+            "topic": course.topic,
+            "completed_lessons": completed_lessons,
+            "total_lessons": len(course.lessons),
+            "topic_scores": {},
         }
 
-        graph = build_tutor_graph().compile()
-        result = await asyncio.to_thread(graph.invoke, tutor_state)
+        result = await run_tutor_check(course_id, quiz_scores, student_profile)
 
         return FeedbackResponse(
             message=result.get("feedback", "Keep up the great work!"),

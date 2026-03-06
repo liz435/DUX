@@ -34,8 +34,23 @@ logger = logging.getLogger(__name__)
 COURSES_DIR = Path(__file__).resolve().parent.parent.parent / "courses"
 COURSES_DIR.mkdir(exist_ok=True)
 
+LOGS_DIR = Path(__file__).resolve().parent.parent.parent / "logs"
+LOGS_DIR.mkdir(exist_ok=True)
+
 _courses: dict[str, Course] = {}
 _step_queues: dict[str, asyncio.Queue[AgentStep | None]] = {}
+
+
+def _log_json(course_id: str, stage: str, data: Any) -> None:
+    """Write a JSON log file: logs/<course_id>_<stage>_<timestamp>.json"""
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    filename = f"{course_id[:8]}_{stage}_{ts}.json"
+    try:
+        payload = data if isinstance(data, str) else json.dumps(data, indent=2, default=str)
+        (LOGS_DIR / filename).write_text(payload)
+        logger.info("Logged %s for course %s", stage, course_id[:8])
+    except Exception:
+        logger.warning("Failed to write log %s", filename, exc_info=True)
 
 
 def _course_path(course_id: str) -> Path:
@@ -187,6 +202,12 @@ async def run_outline_generation(
         )
         store_course(course)
 
+        # Log syllabus / outline
+        _log_json(course_id, "syllabus", {
+            "preferences": preferences.model_dump(),
+            "outlines": [o.model_dump() for o in outlines],
+        })
+
         # Store preferences for Phase 2
         import time
         _cleanup_stale_drafts()
@@ -256,6 +277,13 @@ async def run_content_generation(
             lessons.append(lesson)
             previous_titles.append(lesson.title)
 
+            # Log lesson with interactive schemas
+            _log_json(course_id, f"lesson_{lesson.index}", {
+                "title": lesson.title,
+                "content_length": len(lesson.content),
+                "interactive_elements": lesson.interactive_elements,
+            })
+
             await queue.put(
                 AgentStep(
                     type="lesson_ready",
@@ -298,6 +326,9 @@ async def run_content_generation(
         course = course.model_copy(update={"lessons": lessons, "quizzes": quizzes})
         store_course(course)
 
+        # Log complete course
+        _log_json(course_id, "course_complete", course.model_dump())
+
         await queue.put(
             AgentStep(
                 type="complete",
@@ -306,6 +337,7 @@ async def run_content_generation(
             )
         )
     except Exception as e:
+        logger.error("Content generation failed for %s: %s", course_id[:8], e, exc_info=True)
         await queue.put(AgentStep(type="error", message=str(e)))
     finally:
         await queue.put(None)
@@ -413,6 +445,42 @@ async def run_tutor_check(
 # ---------------------------------------------------------------------------
 
 
+def _semantic_check(user_answer: str, correct_answer: str, question: str) -> tuple[bool, float]:
+    """Use LLM to semantically compare a short answer against the expected answer.
+
+    Returns (is_correct, score) where score is 0.0-1.0.
+    """
+    try:
+        from langchain_core.messages import HumanMessage, SystemMessage
+        from app.agents.llm import get_llm
+
+        llm = get_llm(purpose="validation")
+        prompt = (
+            f"Compare the student's answer to the expected answer.\n\n"
+            f"Question: {question}\n"
+            f"Expected answer: {correct_answer}\n"
+            f"Student answer: {user_answer}\n\n"
+            f"The student does NOT need to match word-for-word. "
+            f"Accept any response that conveys the same meaning or concept.\n"
+            f"Return ONLY a JSON object: "
+            f'{{"correct": bool, "score": float_0_to_1}}'
+        )
+        response = llm.invoke([
+            SystemMessage(content="You are a fair grader. Compare answers semantically, not literally."),
+            HumanMessage(content=prompt),
+        ])
+        text = response.content if isinstance(response.content, str) else str(response.content)
+        text = text.strip()
+        if text.startswith("```"):
+            text = text.split("\n", 1)[-1].rsplit("```", 1)[0]
+        parsed = json.loads(text)
+        return bool(parsed.get("correct", False)), float(parsed.get("score", 0.0))
+    except Exception:
+        logger.warning("Semantic check failed, falling back to exact match", exc_info=True)
+        is_exact = user_answer.strip().lower() == correct_answer.strip().lower()
+        return is_exact, 1.0 if is_exact else 0.0
+
+
 def grade_quiz_answers(quiz: Quiz, answers: dict[str, str]) -> dict[str, Any]:
     """Grade user answers against a quiz. Returns scoring details."""
     results = []
@@ -420,7 +488,12 @@ def grade_quiz_answers(quiz: Quiz, answers: dict[str, str]) -> dict[str, Any]:
 
     for q in quiz.questions:
         user_answer = answers.get(q.id, "")
-        is_correct = user_answer.strip().lower() == q.correct_answer.strip().lower()
+
+        if q.question_type in ("short-answer", "code-completion") and user_answer.strip():
+            is_correct, _score = _semantic_check(user_answer, q.correct_answer, q.question)
+        else:
+            is_correct = user_answer.strip().lower() == q.correct_answer.strip().lower()
+
         if is_correct:
             correct_count += 1
         results.append(

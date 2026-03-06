@@ -162,6 +162,13 @@ export interface LessonOutlineUpdate {
   module?: string;
 }
 
+export interface ContentBlock {
+  type: 'markdown' | 'interactive';
+  content?: string;
+  index?: number;
+  schema?: Record<string, unknown>;
+}
+
 export interface Lesson {
   index: number;
   title: string;
@@ -176,6 +183,7 @@ export interface Lesson {
   key_terms: string[];
   content: string;
   interactive_elements: Record<string, unknown>[];
+  content_blocks: ContentBlock[];
   is_completed: boolean;
   is_unlocked: boolean;
 }

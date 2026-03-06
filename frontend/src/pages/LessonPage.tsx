@@ -214,12 +214,10 @@ export function LessonPage() {
         )}
       </div>
 
-      {/* Lesson content */}
+      {/* Lesson content with inline interactive checks */}
       <article className="mb-10">
-        <Markdown remarkPlugins={[remarkGfm]} components={mdComponents}>
-          {lesson.content}
-        </Markdown>
-      </article>
+        {(() => {
+          const blocks = lesson.content_blocks || [];
 
       {/* Interactive checks */}
       {lesson.interactive_elements.length > 0 && (

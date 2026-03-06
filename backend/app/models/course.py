@@ -41,6 +41,7 @@ class Lesson(LessonOutline):
 
     content: str = ""
     interactive_elements: list[dict] = Field(default_factory=list)
+    content_blocks: list[dict] = Field(default_factory=list)
     is_completed: bool = False
     is_unlocked: bool = False
 

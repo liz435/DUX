@@ -100,7 +100,7 @@ def generate_feedback_node(state: TutorState) -> dict[str, Any]:
         )
         return {
             "feedback": result.feedback,
-            "adaptations": result.adaptations,
+            "adaptations": {a.area: a.recommendation for a in result.adaptations},
         }
     except Exception:
         return {"feedback": _fallback_feedback(assessment, action_plan)}

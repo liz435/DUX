@@ -37,13 +37,20 @@ class DepthCalibration(BaseModel):
     depth_examples: list[str] = Field(default_factory=list)
 
 
+class PrerequisiteLink(BaseModel):
+    """Maps a lesson (by title or index) to its prerequisite lesson indices."""
+
+    lesson: str
+    depends_on: list[int] = Field(default_factory=list)
+
+
 class SyllabusOutput(BaseModel):
     """Structured output for the syllabus architect (Stage 1)."""
 
     scope: SyllabusScope = Field(default_factory=SyllabusScope)
     learning_objectives: list[LessonObjective] = Field(default_factory=list)
     modules: list[SyllabusModule] = Field(default_factory=list)
-    prerequisite_chain: dict[str, list[int]] = Field(default_factory=dict)
+    prerequisite_chain: list[PrerequisiteLink] = Field(default_factory=list)
     depth_calibration: DepthCalibration = Field(default_factory=DepthCalibration)
 
 
@@ -79,6 +86,13 @@ class OutlineOutput(BaseModel):
 # ---------------------------------------------------------------------------
 
 
+class QuizOptionOutput(BaseModel):
+    """A single quiz option."""
+
+    value: str
+    label: str
+
+
 class QuizQuestionOutput(BaseModel):
     """A single quiz question — structured output."""
 
@@ -87,9 +101,9 @@ class QuizQuestionOutput(BaseModel):
     question_type: Literal["multiple-choice", "true-false", "short-answer", "code-completion"]
     blooms_level: str = ""
     maps_to_objective: str = ""
-    options: list[dict[str, str]] | None = None
+    options: list[QuizOptionOutput] = Field(default_factory=list)
     correct_answer: str
-    acceptable_alternatives: list[str] | None = None
+    acceptable_alternatives: list[str] = Field(default_factory=list)
     explanation: str
     difficulty: float = Field(default=0.5, ge=0.0, le=1.0)
 
@@ -105,13 +119,40 @@ class QuizOutput(BaseModel):
 # ---------------------------------------------------------------------------
 
 
+class InteractiveFieldOption(BaseModel):
+    """A single option for choice-based fields."""
+
+    value: str
+    label: str
+    description: str = ""
+
+
+class InteractiveField(BaseModel):
+    """A single form field in an interactive knowledge check."""
+
+    id: str
+    type: Literal["text", "single-choice", "multiple-choice", "boolean", "number", "slider"]
+    label: str
+    description: str = ""
+    required: bool = True
+    placeholder: str = ""
+    options: list[InteractiveFieldOption] = Field(default_factory=list)
+    min: float = 0
+    max: float = 100
+    step: float = 1
+    defaultValue: str = ""
+
+
 class InteractiveElementOutput(BaseModel):
     """Structured output for inline knowledge-check schema generation."""
 
     title: str
     description: str
-    fields: list[dict[str, object]]
-    correct_answer: dict[str, object] = Field(default_factory=dict)
+    fields: list[InteractiveField]
+    correct_answer_json: str = Field(
+        default="{}",
+        description='JSON string mapping field id to expected value, e.g. {"q1": "option_a"}',
+    )
     explanation: str = ""
 
 
@@ -127,6 +168,13 @@ class TutorErrorPattern(BaseModel):
     remediation: str = ""
 
 
+class TutorAdaptation(BaseModel):
+    """A single adaptation recommendation."""
+
+    area: str
+    recommendation: str
+
+
 class TutorOutput(BaseModel):
     """Structured output for the tutor agent."""
 
@@ -134,7 +182,7 @@ class TutorOutput(BaseModel):
     score_trend: Literal["improving", "declining", "stable", "insufficient_data"] = "insufficient_data"
     error_patterns: list[TutorErrorPattern] = Field(default_factory=list)
     feedback: str
-    adaptations: dict[str, object] = Field(default_factory=dict)
+    adaptations: list[TutorAdaptation] = Field(default_factory=list)
 
 
 # ---------------------------------------------------------------------------

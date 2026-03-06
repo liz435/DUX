@@ -144,7 +144,15 @@ def generate_interactive_schema(context: str, check_type: str) -> dict[str, obje
                 ),
             ]
         )
-        return result.model_dump()
+        output = result.model_dump()
+        # Convert correct_answer_json string back to a dict for the frontend
+        import json as _json
+        try:
+            output["correct_answer"] = _json.loads(output.pop("correct_answer_json", "{}"))
+        except (ValueError, TypeError):
+            output["correct_answer"] = {}
+            output.pop("correct_answer_json", None)
+        return output
     except Exception:
         logger.warning("LLM interactive generation failed, using fallback", exc_info=True)
         return _fallback_schema(check_type)

@@ -41,7 +41,7 @@ async def api_key_status() -> ApiKeyStatusResponse:
 
     # Default: OpenAI
     key = settings.openai_api_key
-    model = settings.llm_model_capable
+    model = settings.llm_model_fast
     if not key:
         return ApiKeyStatusResponse(connected=False, provider=provider, model=model, error="API key not set")
     try:

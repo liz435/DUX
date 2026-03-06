@@ -53,7 +53,7 @@ export const DynamicUI: React.FC<DynamicUIProps> = ({
   initialValues = {},
   disabled = false,
 }) => {
-  const fields = schema.fields.map(normalizeField);
+  const fields = (schema.fields || []).map(normalizeField);
 
   const getDefaultValues = () => {
     const defaultValues: FormValues = {};

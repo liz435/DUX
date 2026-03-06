@@ -219,20 +219,55 @@ export function LessonPage() {
         {(() => {
           const blocks = lesson.content_blocks || [];
 
-      {/* Interactive checks */}
-      {lesson.interactive_elements.length > 0 && (
-        <div className="space-y-6 mb-10">
-          {lesson.interactive_elements.map((schema, i) => (
-            <InteractiveCheck
-              key={i}
-              schema={schema as unknown as DynamicFormSchema}
-              courseId={id!}
-              lessonIdx={lessonIdx}
-              elementIdx={i}
-            />
-          ))}
-        </div>
-      )}
+          // Use pre-parsed content_blocks from backend when available
+          if (blocks.length > 0) {
+            return blocks.map((block, i) => {
+              if (block.type === 'markdown') {
+                return (
+                  <Markdown key={`block-${i}`} remarkPlugins={[remarkGfm]} components={mdComponents}>
+                    {block.content || ''}
+                  </Markdown>
+                );
+              }
+              if (block.type === 'interactive' && block.schema) {
+                return (
+                  <div key={`block-${i}`} className="my-6">
+                    <InteractiveCheck
+                      schema={block.schema as unknown as DynamicFormSchema}
+                      courseId={id!}
+                      lessonIdx={lessonIdx}
+                      elementIdx={block.index ?? 0}
+                    />
+                  </div>
+                );
+              }
+              return null;
+            });
+          }
+
+          // Fallback: render content then interactive elements at the bottom
+          return (
+            <>
+              <Markdown remarkPlugins={[remarkGfm]} components={mdComponents}>
+                {lesson.content}
+              </Markdown>
+              {lesson.interactive_elements.length > 0 && (
+                <div className="space-y-6 mt-8">
+                  {lesson.interactive_elements.map((schema, i) => (
+                    <InteractiveCheck
+                      key={i}
+                      schema={schema as unknown as DynamicFormSchema}
+                      courseId={id!}
+                      lessonIdx={lessonIdx}
+                      elementIdx={i}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          );
+        })()}
+      </article>
 
       {/* Navigation */}
       <div className="flex items-center justify-between pt-4 border-t">

@@ -181,8 +181,14 @@ def revise_node(state: LessonWriterState) -> dict[str, Any]:
 
 
 def finalize_node(state: LessonWriterState) -> dict[str, Any]:
-    """Assemble the final Lesson object."""
+    """Assemble the final Lesson object with parsed content blocks."""
+    from app.services.content_parser import parse_lesson_content
+
     outline = state["outline"]
+    content = state.get("draft_content", "")
+    interactive_elements = state.get("interactive_elements", [])
+    content_blocks = parse_lesson_content(content, interactive_elements)
+
     lesson = Lesson(
         index=outline.index,
         title=outline.title,
@@ -190,8 +196,9 @@ def finalize_node(state: LessonWriterState) -> dict[str, Any]:
         key_topics=outline.key_topics,
         has_quiz=outline.has_quiz,
         estimated_minutes=outline.estimated_minutes,
-        content=state.get("draft_content", ""),
-        interactive_elements=state.get("interactive_elements", []),
+        content=content,
+        interactive_elements=interactive_elements,
+        content_blocks=content_blocks,
         is_completed=False,
         is_unlocked=False,
     )

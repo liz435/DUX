@@ -29,6 +29,22 @@ export function InteractiveCheck({ schema, courseId, lessonIdx, elementIdx }: In
 
   const CheckIcon = getCheckIcon(schema.title);
 
+  // Ensure every field has a non-empty label.
+  // LLM-generated schemas often put the question in schema.description
+  // rather than in each field's label. For single-choice fields this is
+  // invisible (option labels still show), but for text/slider/boolean
+  // fields the question appears blank.
+  const fieldsWithLabels = (schema.fields || []).map((field) => {
+    if (field.label) return field;
+    const fallbackLabel =
+      (field as any).question
+      || (field as any).text
+      || schema.description
+      || schema.title
+      || 'Your answer';
+    return { ...field, label: fallbackLabel };
+  });
+
   const handleSubmit = async (values: FormValues) => {
     setState('submitting');
     try {
@@ -136,7 +152,7 @@ export function InteractiveCheck({ schema, courseId, lessonIdx, elementIdx }: In
                 : 'Not quite...'
               : schema.title || 'Knowledge Check'}
           </h3>
-          {state !== 'feedback' && schema.description && (
+          {state !== 'feedback' && schema.description && schema.description === schema.title && (
             <p className="text-xs text-muted-foreground mt-0.5">{schema.description}</p>
           )}
         </div>
@@ -190,13 +206,20 @@ export function InteractiveCheck({ schema, courseId, lessonIdx, elementIdx }: In
             </div>
           </div>
         ) : (
-          <DynamicUI
-            schema={{ ...schema, title: undefined, description: undefined }}
-            onSubmit={handleSubmit}
-            submitLabel={state === 'submitting' ? 'Checking...' : 'Check Answer'}
-            className="border-0 shadow-none rounded-none"
-            disabled={state === 'submitting'}
-          />
+          <>
+            {schema.description && schema.description !== schema.title && (
+              <p className="px-6 pt-5 pb-0 text-sm font-medium text-foreground">
+                {schema.description}
+              </p>
+            )}
+            <DynamicUI
+              schema={{ ...schema, fields: fieldsWithLabels, title: undefined, description: undefined }}
+              onSubmit={handleSubmit}
+              submitLabel={state === 'submitting' ? 'Checking...' : 'Check Answer'}
+              className="border-0 shadow-none rounded-none"
+              disabled={state === 'submitting'}
+            />
+          </>
         )}
       </div>
     </div>

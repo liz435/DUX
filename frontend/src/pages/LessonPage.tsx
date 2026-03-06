@@ -206,27 +206,100 @@ export function LessonPage() {
         )}
       </div>
 
-      {/* Lesson content */}
+      {/* Lesson content with inline interactive checks */}
       <article className="mb-10">
-        <Markdown remarkPlugins={[remarkGfm]} components={mdComponents}>
-          {lesson.content}
-        </Markdown>
-      </article>
+        {(() => {
+          const blocks = lesson.content_blocks || [];
 
-      {/* Interactive checks */}
-      {lesson.interactive_elements.length > 0 && (
-        <div className="space-y-6 mb-10">
-          {lesson.interactive_elements.map((schema, i) => (
-            <InteractiveCheck
-              key={i}
-              schema={schema as DynamicFormSchema}
-              courseId={id!}
-              lessonIdx={lessonIdx}
-              elementIdx={i}
-            />
-          ))}
-        </div>
-      )}
+          // Use pre-parsed content_blocks from backend when available
+          if (blocks.length > 0) {
+            return blocks.map((block, i) => {
+              if (block.type === 'markdown') {
+                return (
+                  <Markdown key={`block-${i}`} remarkPlugins={[remarkGfm]} components={mdComponents}>
+                    {block.content || ''}
+                  </Markdown>
+                );
+              }
+              if (block.type === 'interactive' && block.schema) {
+                return (
+                  <div key={`block-${i}`} className="my-6">
+                    <InteractiveCheck
+                      schema={block.schema as DynamicFormSchema}
+                      courseId={id!}
+                      lessonIdx={lessonIdx}
+                      elementIdx={block.index ?? 0}
+                    />
+                  </div>
+                );
+              }
+              return null;
+            });
+          }
+
+          // Fallback: client-side splitting for older courses without content_blocks
+          const elements = lesson.interactive_elements || [];
+          if (elements.length === 0) {
+            return (
+              <Markdown remarkPlugins={[remarkGfm]} components={mdComponents}>
+                {lesson.content}
+              </Markdown>
+            );
+          }
+
+          const parts = lesson.content.split(/\[Interactive Check (\d+)\]/);
+          const result: React.ReactNode[] = [];
+          for (let i = 0; i < parts.length; i++) {
+            if (i % 2 === 0) {
+              if (parts[i].trim()) {
+                result.push(
+                  <Markdown key={`md-${i}`} remarkPlugins={[remarkGfm]} components={mdComponents}>
+                    {parts[i]}
+                  </Markdown>
+                );
+              }
+            } else {
+              const checkIdx = parseInt(parts[i], 10);
+              if (checkIdx >= 0 && checkIdx < elements.length) {
+                result.push(
+                  <div key={`check-${checkIdx}`} className="my-6">
+                    <InteractiveCheck
+                      schema={elements[checkIdx] as DynamicFormSchema}
+                      courseId={id!}
+                      lessonIdx={lessonIdx}
+                      elementIdx={checkIdx}
+                    />
+                  </div>
+                );
+              }
+            }
+          }
+
+          const referencedIndices = new Set(
+            (lesson.content.match(/\[Interactive Check (\d+)\]/g) || [])
+              .map(m => parseInt(m.match(/\d+/)![0], 10))
+          );
+          const unreferenced = elements
+            .map((schema, i) => ({ schema, i }))
+            .filter(({ i }) => !referencedIndices.has(i));
+          if (unreferenced.length > 0) {
+            result.push(
+              <div key="extra-checks" className="space-y-6 mt-8">
+                {unreferenced.map(({ schema, i }) => (
+                  <InteractiveCheck
+                    key={`extra-${i}`}
+                    schema={schema as DynamicFormSchema}
+                    courseId={id!}
+                    lessonIdx={lessonIdx}
+                    elementIdx={i}
+                  />
+                ))}
+              </div>
+            );
+          }
+          return result;
+        })()}
+      </article>
 
       {/* Navigation */}
       <div className="flex items-center justify-between pt-4 border-t">

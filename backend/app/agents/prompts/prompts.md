@@ -93,12 +93,11 @@ Return a JSON object:
       "skills_gained": [string]
     }
   ],
-  "prerequisite_chain": {
-    "0": [],
-    "1": [0],
-    "2": [0, 1],
-    ...
-  },
+  "prerequisite_chain": [
+    {"lesson": "0", "depends_on": []},
+    {"lesson": "1", "depends_on": [0]},
+    {"lesson": "2", "depends_on": [0, 1]}
+  ],
   "depth_calibration": {
     "vocabulary_policy": string,
     "abstraction_level": string,

@@ -93,9 +93,13 @@ async def confirm_course(
 @router.get("/courses/{course_id}/stream")
 async def stream_course_generation(course_id: str) -> EventSourceResponse:
     """SSE endpoint — streams AgentStep events during generation."""
+    from app.services.content_parser import SSELogger
+
     queue = get_step_queue(course_id)
     if queue is None:
         raise HTTPException(status_code=404, detail="No active generation for this course ID.")
+
+    sse_logger = SSELogger(course_id)
 
     async def event_generator() -> AsyncGenerator[dict[str, str], None]:
         try:
@@ -103,8 +107,12 @@ async def stream_course_generation(course_id: str) -> EventSourceResponse:
                 step = await queue.get()
                 if step is None:
                     break
-                yield {"event": step.type, "data": step.model_dump_json()}
+                payload = step.model_dump_json()
+                sse_logger.log(step.type, payload)
+                yield {"event": step.type, "data": payload}
         finally:
+            summary = sse_logger.close()
+            logger.info("SSE stream closed for %s: %s", course_id[:8], summary)
             remove_step_queue(course_id)
 
     return EventSourceResponse(event_generator())
@@ -281,15 +289,32 @@ async def check_interactive_answer(
 
             llm = get_llm(purpose="validation")
             user_text = " ".join(str(v) for v in body.answers.values())
-            eval_prompt = (
-                f"Evaluate this student's response to a knowledge check.\n\n"
-                f"Question context: {element.get('description', '')}\n"
-                f"Question: {element.get('fields', [{}])[0].get('label', '')}\n"
-                f"Student answer: {user_text}\n\n"
-                f"Score from 0.0 to 1.0 based on understanding shown. "
-                f"Return ONLY a JSON object: "
-                f'{{"score": float, "feedback": "encouraging feedback string"}}'
-            )
+
+            # Build evaluation prompt — include expected answer for semantic comparison if available
+            if has_correct:
+                expected_text = " ".join(str(v) for v in correct_answer.values())
+                eval_prompt = (
+                    f"Evaluate this student's short answer using SEMANTIC comparison.\n\n"
+                    f"Question context: {element.get('description', '')}\n"
+                    f"Question: {element.get('fields', [{}])[0].get('label', '')}\n"
+                    f"Expected answer: {expected_text}\n"
+                    f"Student answer: {user_text}\n\n"
+                    f"The student does NOT need to match the expected answer word-for-word. "
+                    f"Accept any response that conveys the same meaning, concept, or idea. "
+                    f"Score 1.0 if semantically correct, 0.0 if clearly wrong, 0.5-0.8 if partially correct. "
+                    f"Return ONLY a JSON object: "
+                    f'{{"score": float, "feedback": "encouraging feedback string"}}'
+                )
+            else:
+                eval_prompt = (
+                    f"Evaluate this student's response to a knowledge check.\n\n"
+                    f"Question context: {element.get('description', '')}\n"
+                    f"Question: {element.get('fields', [{}])[0].get('label', '')}\n"
+                    f"Student answer: {user_text}\n\n"
+                    f"Score from 0.0 to 1.0 based on understanding shown. "
+                    f"Return ONLY a JSON object: "
+                    f'{{"score": float, "feedback": "encouraging feedback string"}}'
+                )
             messages = [
                 SystemMessage(content="You are a supportive tutor evaluating student responses. Be encouraging but honest."),
                 HumanMessage(content=eval_prompt),

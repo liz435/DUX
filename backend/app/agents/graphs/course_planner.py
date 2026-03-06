@@ -259,7 +259,7 @@ def _fallback_syllabus(prefs: CoursePreferences) -> dict[str, Any]:
             {"objective": f"Apply {prefs.topic} in practical examples", "blooms_level": "apply"},
         ],
         "modules": [{"title": prefs.topic, "goal": f"Learn {prefs.topic}", "lesson_indices": list(range(prefs.lesson_count)), "skills_gained": [prefs.topic]}],
-        "prerequisite_chain": {str(i): list(range(i)) for i in range(prefs.lesson_count)},
+        "prerequisite_chain": [{"lesson": str(i), "depends_on": list(range(i))} for i in range(prefs.lesson_count)],
         "depth_calibration": {
             "vocabulary_policy": f"Define all terms appropriate for {prefs.level} learners.",
             "abstraction_level": "practical" if prefs.level != "advanced" else "deep",

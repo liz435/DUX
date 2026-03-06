@@ -41,6 +41,7 @@ class Lesson(LessonOutline):
 
     content: str = ""
     interactive_elements: list[dict] = Field(default_factory=list)
+    content_blocks: list[dict] = Field(default_factory=list)
     is_completed: bool = False
     is_unlocked: bool = False
 
@@ -50,7 +51,7 @@ class QuizQuestion(BaseModel):
 
     id: str
     question: str = Field(min_length=1)
-    question_type: Literal["multiple-choice", "true-false", "short-answer"]
+    question_type: Literal["multiple-choice", "true-false", "short-answer", "code-completion"]
     options: list[QuizOption] | None = None
     correct_answer: str = Field(min_length=1)
     explanation: str = Field(min_length=1)
